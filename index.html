@@ -1,33 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IPDESIGN</title>
-    <meta name="description" content="IPDESIGN preview site" />
+    <title>IPDESIGN | Affordable Custom Websites for UK Businesses</title>
+    <meta
+      name="description"
+      content="Premium websites, landing pages, AI solutions and custom platforms for UK small businesses. Professional quality from £1,500. Get a free quote today."
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Syne:wght@500;700;800&display=swap"
       rel="stylesheet"
     />
+    <link rel="icon" type="image/svg+xml" href="/logo4.svg" />
+    <link rel="apple-touch-icon" href="/logo4.svg" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <div class="page-shell">
       <header class="site-header" data-reveal>
         <div class="container site-header__inner">
-          <a class="brand" href="#top" aria-label="IPDESIGN home">
-            <span class="brand__mark"></span>
-            <span class="brand__text" id="brand-text">IPDESIGN</span>
+          <a class="brand" href="#top" aria-label="IPDESIGN Home">
+            <img class="brand__logo" src="/logo4.svg" alt="" />
           </a>
-          <nav class="site-nav" aria-label="Primary">
+          <nav class="site-nav" aria-label="Main navigation">
             <a href="#services" id="nav-services">Services</a>
-            <a href="#why" id="nav-why">Why IPDESIGN</a>
-            <a href="#portal" id="nav-portal">Portal Preview</a>
-            <a href="#ventures" id="nav-ventures">Ventures</a>
+            <a href="#why" id="nav-why">Why Us</a>
+            <a href="#portal" id="nav-portal">Solutions</a>
+            <a href="#ventures" id="nav-ventures">Portfolio</a>
+            <a href="/dashboard" id="nav-dashboard">Dashboard Demo</a>
           </nav>
-          <a class="button button--ghost button--compact" href="#contact" id="header-cta">Talk to IPDESIGN</a>
+          <a class="header-phone" href="tel:+4402000000000" id="header-phone">+44 (0) 20 XXXX XXXX</a>
+          <a class="button button--ghost button--compact" href="#contact" id="header-cta">Get a Quote</a>
+          <button class="lang-toggle" type="button" id="lang-toggle" aria-label="Switch language">FR</button>
         </div>
       </header>
 
@@ -37,25 +44,20 @@
             <div class="hero__gradient hero__gradient--one"></div>
             <div class="hero__gradient hero__gradient--two"></div>
             <div class="hero__grid"></div>
-            <div class="hero__network">
-              <span class="network-line network-line--one"></span>
-              <span class="network-line network-line--two"></span>
-              <span class="network-line network-line--three"></span>
-              <span class="network-node network-node--one"></span>
-              <span class="network-node network-node--two"></span>
-              <span class="network-node network-node--three"></span>
-              <span class="network-node network-node--four"></span>
+            <div class="hero__sequence" aria-hidden="true">
+              <canvas class="hero__sequence-canvas" width="1280" height="720"></canvas>
             </div>
           </div>
 
           <div class="container hero__layout">
-            <div class="hero__content" data-reveal data-delay="0">
+            <div class="hero__content" data-reveal data-delay="0" data-watermark="DESIGN">
               <p class="eyebrow" id="hero-eyebrow"></p>
               <h1 class="hero-title" id="hero-title"></h1>
               <p class="hero__lead" id="hero-lead"></p>
               <div class="hero__actions">
                 <a class="button" href="#contact" id="hero-primary-cta"></a>
-                <a class="button button--ghost" href="#contact" id="hero-secondary-cta"></a>
+                <a class="button button--ghost" href="tel:+4402000000000" id="hero-call-cta"></a>
+                <a class="button button--ghost" href="#services" id="hero-tertiary-cta"></a>
               </div>
               <ul class="hero__signals" aria-label="Capabilities" id="hero-signals"></ul>
             </div>
@@ -218,16 +220,54 @@
         <section class="section section--cta" id="contact">
           <div class="container">
             <div class="cta-block panel interactive-card" data-reveal>
-              <div>
+              <div class="cta-block__intro">
                 <p class="eyebrow" id="cta-eyebrow"></p>
                 <h2 id="cta-title"></h2>
                 <p id="cta-text"></p>
+                <ul class="cta-block__signals" id="cta-signals"></ul>
               </div>
-              <div class="cta-block__actions">
-                <a class="button" href="mailto:hello@ipdesign.example" id="cta-primary"></a>
-                <a class="button button--ghost" href="https://wa.me/0000000000" id="cta-secondary"></a>
-                <a class="text-link" href="mailto:hello@ipdesign.example" id="cta-contact-link"></a>
-              </div>
+              <form class="brief-form" id="brief-form">
+                <div class="brief-form__grid">
+                  <label class="field">
+                    <span id="form-label-project">Project name</span>
+                    <input type="text" name="project" placeholder="e.g. Corporate site for consulting firm" required />
+                  </label>
+                  <label class="field">
+                    <span id="form-label-company">Company or brand</span>
+                    <input type="text" name="company" placeholder="Your company or brand name" required />
+                  </label>
+                  <label class="field">
+                    <span id="form-label-need">Type of service</span>
+                    <select name="need" required>
+                      <option value="">Select</option>
+                      <option>Modern website</option>
+                      <option>Premium landing page</option>
+                      <option>Custom digital solution</option>
+                      <option>MVP / Business platform</option>
+                      <option>AI integration</option>
+                      <option>Dashboard & automation</option>
+                    </select>
+                  </label>
+                  <label class="field">
+                    <span id="form-label-timeline">Timeline</span>
+                    <input type="text" name="timeline" placeholder="e.g. 3 to 4 weeks" />
+                  </label>
+                  <label class="field field--full">
+                    <span id="form-label-brief">Project brief</span>
+                    <textarea
+                      name="brief"
+                      rows="5"
+                      placeholder="Describe your business, your needs and the type of solution you're looking for."
+                      required
+                    ></textarea>
+                  </label>
+                </div>
+                <div class="brief-form__footer">
+                  <p class="brief-form__note" id="cta-note"></p>
+                  <button class="button" type="submit" id="brief-submit"></button>
+                </div>
+                <p class="brief-form__status" id="brief-status" aria-live="polite"></p>
+              </form>
             </div>
           </div>
         </section>
@@ -236,9 +276,8 @@
       <footer class="site-footer">
         <div class="container site-footer__grid">
           <div>
-            <a class="brand brand--footer" href="#top">
-              <span class="brand__mark"></span>
-              <span class="brand__text" id="footer-brand-text">IPDESIGN</span>
+            <a class="brand brand--footer" href="#top" aria-label="Back to top">
+              <img class="brand__logo" src="/logo4.svg" alt="" />
             </a>
             <p class="site-footer__summary" id="footer-summary"></p>
           </div>
@@ -250,8 +289,10 @@
           </div>
           <div>
             <p class="footer-title" id="footer-contact-title"></p>
-            <a href="mailto:hello@ipdesign.example" id="footer-email"></a>
-            <a href="https://wa.me/0000000000" id="footer-whatsapp"></a>
+            <a href="#contact" id="footer-contact-primary"></a>
+            <a href="#portal" id="footer-contact-secondary"></a>
+            <a class="footer-contact-link" href="tel:+4402000000000" id="footer-phone"></a>
+            <a class="footer-contact-link" href="mailto:hello@ipdesign.co.uk" id="footer-email"></a>
             <span id="footer-location"></span>
           </div>
         </div>
