@@ -28,8 +28,8 @@
           <nav class="site-nav" aria-label="Main navigation">
             <a href="#services" id="nav-services">Services</a>
             <a href="#why" id="nav-why">Why Us</a>
-            <a href="#portal" id="nav-portal">Solutions</a>
-            <a href="#ventures" id="nav-ventures">Portfolio</a>
+            <a href="#proof" id="nav-proof">Portfolio</a>
+            <a href="#process" id="nav-process">Process</a>
             <a href="/dashboard" id="nav-dashboard">Dashboard Demo</a>
           </nav>
           <a class="header-phone" href="tel:+4402000000000" id="header-phone">+44 (0) 20 XXXX XXXX</a>
@@ -39,7 +39,8 @@
       </header>
 
       <main>
-        <section class="hero section section--flush" id="top">
+        <!-- Section 1 — Hero -->
+        <section class="hero section section--flush" id="top" data-reveal>
           <div class="hero__backdrop" aria-hidden="true">
             <div class="hero__gradient hero__gradient--one"></div>
             <div class="hero__gradient hero__gradient--two"></div>
@@ -50,242 +51,120 @@
           </div>
 
           <div class="container hero__layout">
-            <div class="hero__content" data-reveal data-delay="0" data-watermark="DESIGN">
+            <div class="hero__content" data-reveal data-delay="0">
               <p class="eyebrow" id="hero-eyebrow"></p>
               <h1 class="hero-title" id="hero-title"></h1>
               <p class="hero__lead" id="hero-lead"></p>
-              <div class="hero__actions">
-                <a class="button" href="#contact" id="hero-primary-cta"></a>
-                <a class="button button--ghost" href="tel:+4402000000000" id="hero-call-cta"></a>
-                <a class="button button--ghost" href="#services" id="hero-tertiary-cta"></a>
+              <div class="hero-ctas">
+                <a class="button button--primary" href="#contact" id="hero-primary-cta"></a>
+                <a class="button button--ghost" href="#services" id="hero-ghost-cta"></a>
               </div>
-              <ul class="hero__signals" aria-label="Capabilities" id="hero-signals"></ul>
+              <div class="trust-bar" id="trust-bar"></div>
             </div>
+          </div>
+        </section>
 
-            <div class="hero__panel interactive-card" data-reveal data-delay="140">
-              <div class="panel panel--hero">
-                <div class="panel__header">
-                  <div>
-                    <p class="panel__eyebrow" id="hero-panel-eyebrow"></p>
-                    <h2 id="hero-panel-title"></h2>
-                  </div>
-                  <span class="status-pill" id="hero-panel-status"></span>
-                </div>
-                <div class="hero-stack">
-                  <article class="hero-stack__card hero-stack__card--primary">
-                    <div class="hero-stack__heading">
-                      <span id="hero-card-primary-title"></span>
-                      <span id="hero-card-primary-meta"></span>
-                    </div>
-                    <p id="hero-card-primary-text"></p>
-                  </article>
-                  <article class="hero-stack__card">
-                    <div class="hero-stack__heading">
-                      <span id="hero-card-secondary-title"></span>
-                      <span id="hero-card-secondary-meta"></span>
-                    </div>
-                    <div class="hero-tags" id="hero-card-tags"></div>
-                  </article>
-                  <article class="hero-stack__card hero-stack__card--row">
-                    <div>
-                      <p class="mini-label" id="hero-card-tertiary-label"></p>
-                      <strong id="hero-card-tertiary-title"></strong>
-                    </div>
-                    <div class="signal-bars" aria-hidden="true">
-                      <span></span>
-                      <span></span>
-                      <span></span>
-                      <span></span>
-                    </div>
-                  </article>
-                </div>
+        <!-- Section 2 — Problem / Agitation -->
+        <section class="section problem" id="problem" data-reveal>
+          <div class="container">
+            <div class="problem__grid">
+              <div class="problem__copy">
+                <p class="eyebrow" id="problem-eyebrow"></p>
+                <h2 id="problem-title"></h2>
               </div>
+              <div class="problem__cards" id="problem-cards"></div>
             </div>
+            <blockquote class="manifesto" id="manifesto-quote"></blockquote>
           </div>
         </section>
 
-        <section class="section trust-band" data-reveal>
-          <div class="container trust-band__inner">
-            <p id="trust-band-text"></p>
-            <div class="trust-band__items" id="trust-band-items"></div>
-            <div class="trust-band__proof">
-              <span class="trust-band__count">14+</span>
-              <span class="trust-band__count-label" id="trust-band-count-label">projects delivered</span>
+        <!-- Section 3 — Solution Reveal / Differentiation -->
+        <section class="section differentiation" id="why" data-reveal>
+          <div class="container">
+            <div class="section-heading section-heading--center">
+              <p class="eyebrow" id="why-eyebrow"></p>
+              <h2 id="why-title"></h2>
             </div>
+            <div class="pillars" id="pillars-grid"></div>
           </div>
         </section>
 
-        <section class="showcase-strip" data-reveal>
-          <div class="container showcase-strip__inner">
-            <p class="eyebrow" id="showcase-eyebrow"></p>
-            <div class="showcase-marquee">
-              <div class="showcase-marquee__track" id="showcase-marquee"></div>
-            </div>
-          </div>
-        </section>
-
-        <section class="section editorial-break">
-          <div class="container editorial-break__layout">
-            <p class="eyebrow" id="manifesto-eyebrow" data-reveal></p>
-            <h2 class="editorial-break__title" id="manifesto-title" data-reveal data-delay="60"></h2>
-            <div class="editorial-break__support" data-reveal data-delay="120">
-              <p id="manifesto-text"></p>
-              <a class="text-link editorial-break__link" href="#services" id="manifesto-link"></a>
-            </div>
-          </div>
-        </section>
-
-        <section class="section" id="services">
-          <div class="container section-shell section-shell--services">
-            <div class="section-heading section-heading--sticky section-heading--rail" data-reveal>
+        <!-- Section 4 — Services Grid -->
+        <section class="section" id="services" data-reveal>
+          <div class="container">
+            <div class="section-heading section-heading--center">
               <p class="eyebrow" id="services-eyebrow"></p>
               <h2 id="services-title"></h2>
-              <p id="services-text"></p>
             </div>
             <div class="services-grid" id="services-grid"></div>
           </div>
         </section>
 
-        <section class="section" id="why">
-          <div class="container why-layout">
-            <div class="why-copy" data-reveal>
-              <p class="eyebrow" id="why-eyebrow"></p>
-              <h2 id="why-title"></h2>
-              <p id="why-text"></p>
-            </div>
-            <div class="why-panels" data-reveal data-delay="120" id="why-panels"></div>
-          </div>
-        </section>
-
-        <section class="section">
-          <div class="container operations-layout">
-            <div class="operations-intro" data-reveal>
-              <div class="section-heading section-heading--tight">
-                <p class="eyebrow" id="industries-eyebrow"></p>
-                <h2 id="industries-title"></h2>
-              </div>
-              <div class="industries-cloud" id="industries-cloud"></div>
-            </div>
-
-            <div class="operations-process" data-reveal data-delay="120">
-              <div class="section-heading section-heading--tight">
-                <p class="eyebrow" id="process-eyebrow"></p>
-                <h2 id="process-title"></h2>
-              </div>
-              <div class="process-list" id="process-list"></div>
-            </div>
-          </div>
-        </section>
-
-        <section class="section" id="portal">
-          <div class="container portal-layout">
-            <div class="section-heading section-heading--sticky" data-reveal>
-              <p class="eyebrow" id="portal-eyebrow"></p>
-              <h2 id="portal-title"></h2>
-              <p id="portal-text"></p>
-            </div>
-
-            <div class="portal-preview panel interactive-card" data-reveal data-delay="140">
-              <div class="portal-preview__topbar">
-                <div class="portal-preview__title">
-                  <p class="panel__eyebrow" id="portal-panel-eyebrow"></p>
-                  <h3 id="portal-panel-title"></h3>
-                </div>
-                <div class="portal-preview__filters" id="portal-filters"></div>
-              </div>
-
-              <div class="portal-preview__body">
-                <div class="portal-list">
-                  <div class="portal-list__header">
-                    <span id="portal-header-request"></span>
-                    <span id="portal-header-status"></span>
-                    <span id="portal-header-priority"></span>
-                  </div>
-                  <div class="portal-list__items" id="portal-list"></div>
-                </div>
-
-                <aside class="portal-detail" id="portal-detail" aria-live="polite"></aside>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="section" id="ventures">
-          <div class="container section-shell section-shell--ventures">
-            <div class="section-heading section-heading--sticky section-heading--rail" data-reveal>
-              <p class="eyebrow" id="ventures-eyebrow"></p>
-              <h2 id="ventures-title"></h2>
-              <p id="ventures-text"></p>
-            </div>
-            <div class="ventures-grid" id="ventures-grid"></div>
-          </div>
-        </section>
-
-        <section class="section section--cta" id="contact">
+        <!-- Section 5 — Social Proof / Portfolio -->
+        <section class="section proof" id="proof" data-reveal>
           <div class="container">
-            <div class="cta-block panel interactive-card" data-reveal>
-              <div class="cta-block__intro">
+            <div class="proof__grid">
+              <div class="proof__stats" id="proof-stats"></div>
+              <div class="proof__portfolio" id="proof-portfolio"></div>
+            </div>
+            <div class="proof__wordcloud" id="proof-wordcloud"></div>
+          </div>
+        </section>
+
+        <!-- Section 6 — Objection Crusher -->
+        <section class="section objections" id="faq" data-reveal>
+          <div class="container">
+            <div class="section-heading section-heading--center">
+              <p class="eyebrow" id="faq-eyebrow"></p>
+              <h2 id="faq-title"></h2>
+            </div>
+            <div class="accordion" id="faq-accordion"></div>
+            <div class="comparison-table" id="comparison-table"></div>
+          </div>
+        </section>
+
+        <!-- Section 7 — Process Timeline -->
+        <section class="section" id="process" data-reveal>
+          <div class="container">
+            <div class="section-heading section-heading--center">
+              <p class="eyebrow" id="process-eyebrow"></p>
+              <h2 id="process-title"></h2>
+            </div>
+            <div class="timeline" id="timeline"></div>
+          </div>
+        </section>
+
+        <!-- Section 8 — Final CTA / Free Audit Form -->
+        <section class="section section--cta cta-section" id="contact" data-reveal>
+          <div class="container">
+            <div class="cta-section__grid">
+              <div class="cta-section__copy">
                 <p class="eyebrow" id="cta-eyebrow"></p>
                 <h2 id="cta-title"></h2>
                 <p id="cta-text"></p>
-                <ul class="cta-block__signals" id="cta-signals"></ul>
+                <div class="scarcity-badge" id="cta-scarcity"></div>
               </div>
-              <form class="brief-form" id="brief-form">
-                <div class="brief-form__progress" aria-hidden="true">
-                  <div class="brief-form__progress-bar" id="form-progress-bar"></div>
-                  <span class="brief-form__progress-text" id="form-progress-text"></span>
-                </div>
-                <div class="brief-form__grid">
-                  <label class="field">
-                    <span id="form-label-project">Project name</span>
-                    <input type="text" name="project" placeholder="e.g. Corporate site for consulting firm" required />
-                  </label>
-                  <label class="field">
-                    <span id="form-label-company">Company or brand</span>
-                    <input type="text" name="company" placeholder="Your company or brand name" required />
-                  </label>
-                  <label class="field">
-                    <span id="form-label-need">Type of service</span>
-                    <select name="need" required>
-                      <option value="">Select</option>
-                      <option>Modern website</option>
-                      <option>Premium landing page</option>
-                      <option>Custom digital solution</option>
-                      <option>MVP / Business platform</option>
-                      <option>AI integration</option>
-                      <option>Dashboard & automation</option>
-                    </select>
-                  </label>
-                  <label class="field">
-                    <span id="form-label-timeline">Timeline</span>
-                    <input type="text" name="timeline" placeholder="e.g. 3 to 4 weeks" />
-                  </label>
-                  <label class="field field--full">
-                    <span id="form-label-brief">Project brief</span>
-                    <textarea
-                      name="brief"
-                      rows="5"
-                      placeholder="Describe your business, your needs and the type of solution you're looking for."
-                      required
-                    ></textarea>
-                  </label>
-                </div>
-                <div class="brief-form__footer">
-                  <p class="brief-form__note" id="cta-note"></p>
-                  <button class="button" type="submit" id="brief-submit"></button>
-                </div>
-                <p class="brief-form__status" id="brief-status" aria-live="polite"></p>
-                <div class="brief-form__success" id="form-success" hidden>
-                  <h3>Your audit is on its way.</h3>
-                  <p>We'll review your site and send a personalized video audit within 48 hours. Here's what happens next:</p>
-                  <ol>
-                    <li>We review your current site and identify the top 3 opportunities</li>
-                    <li>We record a short video walkthrough with specific recommendations</li>
-                    <li>If you'd like to move forward, we'll scope the project together</li>
-                  </ol>
-                </div>
+              <form class="audit-form" id="audit-form">
+                <label class="field">
+                  <span id="form-label-name">Name</span>
+                  <input type="text" name="name" id="audit-name" required />
+                </label>
+                <label class="field">
+                  <span id="form-label-email">Email</span>
+                  <input type="email" name="email" id="audit-email" required />
+                </label>
+                <label class="field">
+                  <span id="form-label-url">Website URL</span>
+                  <input type="url" name="url" id="audit-url" />
+                </label>
+                <label class="field">
+                  <span id="form-label-message">Message</span>
+                  <textarea name="message" id="audit-message" rows="4"></textarea>
+                </label>
+                <button class="button button--primary" type="submit" id="audit-submit"></button>
               </form>
             </div>
+            <p class="cta-section__trust" id="cta-trust"></p>
           </div>
         </section>
       </main>
@@ -301,13 +180,13 @@
           <div>
             <p class="footer-title" id="footer-links-title"></p>
             <a href="#services" id="footer-link-services"></a>
-            <a href="#portal" id="footer-link-portal"></a>
-            <a href="#ventures" id="footer-link-ventures"></a>
+            <a href="#why" id="footer-link-why"></a>
+            <a href="#proof" id="footer-link-proof"></a>
           </div>
           <div>
             <p class="footer-title" id="footer-contact-title"></p>
             <a href="#contact" id="footer-contact-primary"></a>
-            <a href="#portal" id="footer-contact-secondary"></a>
+            <a href="#process" id="footer-contact-secondary"></a>
             <a class="footer-contact-link" href="tel:+4402000000000" id="footer-phone"></a>
             <a class="footer-contact-link" href="mailto:hello@ipdesign.co.uk" id="footer-email"></a>
             <span id="footer-location"></span>
