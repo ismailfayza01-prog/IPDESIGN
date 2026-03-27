@@ -108,6 +108,10 @@
           <div class="container trust-band__inner">
             <p id="trust-band-text"></p>
             <div class="trust-band__items" id="trust-band-items"></div>
+            <div class="trust-band__proof">
+              <span class="trust-band__count">14+</span>
+              <span class="trust-band__count-label" id="trust-band-count-label">projects delivered</span>
+            </div>
           </div>
         </section>
 
@@ -227,6 +231,10 @@
                 <ul class="cta-block__signals" id="cta-signals"></ul>
               </div>
               <form class="brief-form" id="brief-form">
+                <div class="brief-form__progress" aria-hidden="true">
+                  <div class="brief-form__progress-bar" id="form-progress-bar"></div>
+                  <span class="brief-form__progress-text" id="form-progress-text"></span>
+                </div>
                 <div class="brief-form__grid">
                   <label class="field">
                     <span id="form-label-project">Project name</span>
@@ -267,6 +275,15 @@
                   <button class="button" type="submit" id="brief-submit"></button>
                 </div>
                 <p class="brief-form__status" id="brief-status" aria-live="polite"></p>
+                <div class="brief-form__success" id="form-success" hidden>
+                  <h3>Your audit is on its way.</h3>
+                  <p>We'll review your site and send a personalized video audit within 48 hours. Here's what happens next:</p>
+                  <ol>
+                    <li>We review your current site and identify the top 3 opportunities</li>
+                    <li>We record a short video walkthrough with specific recommendations</li>
+                    <li>If you'd like to move forward, we'll scope the project together</li>
+                  </ol>
+                </div>
               </form>
             </div>
           </div>

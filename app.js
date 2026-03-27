@@ -36,16 +36,16 @@ const contentEN = {
     cta: "Get a Quote",
   },
   hero: {
-    eyebrow: "Premium web design & AI solutions for UK businesses",
-    titleLines: ["Custom websites", "& AI solutions", "for UK", "businesses."],
+    eyebrow: "Your competitors already have a proper website. Do you?",
+    titleLines: ["Stop losing clients", "to competitors", "with better", "websites."],
     lead:
-      "IPDESIGN builds premium websites, AI-powered tools and custom platforms for UK small businesses \u2014 with quality you\u2019d expect from a London agency, at a fraction of the cost.",
-    primaryCta: "Get a free quote",
+      "Every week without a credible site, you\u2019re losing enquiries to competitors who invested in theirs. IPDESIGN builds the premium websites, AI tools and platforms that make UK businesses get chosen \u2014 with London-quality design at a fraction of the cost.",
+    primaryCta: "Get your free site audit",
     secondaryCta: "Book a free 15-min call",
     tertiaryCta: "View our services",
     signals: [
-      "UK-quality design at competitive rates",
-      "Fast turnaround \u2014 2 to 6 weeks",
+      "14+ projects delivered across 8 sectors",
+      "2 to 6 weeks from brief to launch",
       "Full code ownership \u2014 no lock-in",
     ],
     panel: {
@@ -64,7 +64,7 @@ const contentEN = {
     },
   },
   trustBand: {
-    text: "One partner for your brand, lead qualification and business tools \u2014 serving UK businesses remotely from our studio.",
+    text: "Trusted by 14+ businesses across 8 sectors \u2014 one partner for your brand, lead qualification and business tools.",
     items: ["Websites", "Landing Pages", "AI Solutions", "MVPs", "Dashboards", "Workflows"],
   },
   showcase: {
@@ -82,9 +82,9 @@ const contentEN = {
   },
   manifesto: {
     eyebrow: "Our approach",
-    title: "A premium digital presence or bespoke business tools \u2014 without unnecessary complexity.",
+    title: "We\u2019re not the cheapest option. We\u2019re the one your clients will actually trust.",
     text:
-      "IPDESIGN combines high-end design, rapid delivery and intelligent AI integration. The goal is simple: give UK businesses a stronger, clearer and more effective digital foundation.",
+      "IPDESIGN isn\u2019t a budget freelancer or an offshore template factory. We combine high-end design, rapid delivery and intelligent AI \u2014 because the businesses that invest in looking credible are the ones that win.",
     link: "View our services",
   },
   sections: {
@@ -102,9 +102,9 @@ const contentEN = {
       panels: [
         {
           eyebrow: "Competitive rates",
-          title: "UK-quality design at a fraction of London agency prices",
+          title: "London-quality design \u2014 without the London price tag",
           text:
-            "Our Tangier studio keeps overheads low whilst maintaining the same design standards and communication quality you\u2019d expect from a local partner.",
+            "Our Tangier studio delivers the same standard you\u2019d get from a \u00a310,000+ London agency \u2014 at a fraction of the price. 14+ businesses have already made the switch.",
         },
         {
           eyebrow: "Fast turnaround",
@@ -149,17 +149,17 @@ const contentEN = {
         "Our portfolio spans multiple sectors and objectives: brand image, client acquisition, lead qualification, business digitisation and operational support.",
     },
     cta: {
-      eyebrow: "Get a quote",
-      title: "Tell us about your project.",
+      eyebrow: "Free site audit",
+      title: "Send us your site. We\u2019ll show you what\u2019s holding it back.",
       text:
-        "Describe your business, your needs and what you\u2019re looking to achieve. We\u2019ll come back to you within 24 hours with a tailored proposal.",
+        "Share your current website or Instagram link. Within 48 hours, we\u2019ll send you a personalized audit with 3 specific recommendations \u2014 completely free, no strings attached.",
       signals: [
-        "Free 15-minute consultation",
-        "Bespoke quote within 24 hours",
-        "Guidance towards the right solution",
+        "Free personalized video audit",
+        "Response within 48 hours",
+        "Only 2 project slots left this month",
       ],
-      note: "Or call us directly for an immediate chat.",
-      submit: "Get a free quote",
+      note: "Or message us on WhatsApp for an immediate chat.",
+      submit: "Get my free audit",
       destinationEmail: "hello@ipdesign.co.uk",
       mailSubjectPrefix: "IPDESIGN Enquiry",
     },
@@ -244,17 +244,17 @@ const contentFR = {
     cta: "Demander un devis",
   },
   hero: {
-    eyebrow: "Entreprise marocaine de nouvelles technologies",
-    titleLines: ["Sites premium,", "solutions IA", "et plateformes", "sur mesure pour entreprises."],
+    eyebrow: "Vos concurrents ont d\u00e9j\u00e0 un vrai site. Et vous ?",
+    titleLines: ["Arr\u00eatez de perdre", "des clients face", "\u00e0 des concurrents", "mieux \u00e9quip\u00e9s."],
     lead:
-      "Basee a Tanger, IPDESIGN concoit des experiences web et des outils metier qui rendent une entreprise plus credible, plus lisible et mieux equipee pour vendre ou operer.",
-    primaryCta: "Demander un devis",
+      "Chaque semaine sans un site cr\u00e9dible, vous perdez des demandes face \u00e0 ceux qui ont investi dans le leur. IPDESIGN cr\u00e9e les sites premium, outils IA et plateformes qui font la diff\u00e9rence \u2014 depuis Tanger, pour le march\u00e9 marocain.",
+    primaryCta: "Audit gratuit de votre site",
     secondaryCta: "Reserver un appel de 15 min",
     tertiaryCta: "Voir les solutions",
     signals: [
-      "Design premium et execution rapide",
-      "IA utile pour qualifier et automatiser",
-      "Partenaire tech local fiable au Maroc",
+      "14+ projets livr\u00e9s dans 8 secteurs",
+      "2 \u00e0 6 semaines de d\u00e9lai",
+      "Code 100% propri\u00e9taire \u2014 sans engagement",
     ],
     panel: {
       eyebrow: "Apercu solution",
@@ -272,7 +272,7 @@ const contentFR = {
     },
   },
   trustBand: {
-    text: "Un seul partenaire pour l'image, la qualification et les outils metier.",
+    text: "14+ entreprises accompagn\u00e9es dans 8 secteurs \u2014 un seul partenaire pour l\u2019image, la qualification et les outils m\u00e9tier.",
     items: ["Sites web", "Landing pages", "Solutions IA", "MVP", "Dashboards", "Workflows"],
   },
   showcase: {
@@ -281,9 +281,9 @@ const contentFR = {
   },
   manifesto: {
     eyebrow: "Positionnement",
-    title: "Une presence premium ou une solution metier, sans inertie inutile.",
+    title: "On n\u2019est pas l\u2019option la moins ch\u00e8re. On est celle que vos clients prendront au s\u00e9rieux.",
     text:
-      "IPDESIGN combine design haut de gamme, execution rapide et usage intelligent de l'IA. L'objectif est simple : donner aux entreprises une base digitale plus forte, plus claire et plus utile.",
+      "IPDESIGN n\u2019est ni un freelance low-cost ni une usine \u00e0 templates. Design haut de gamme, ex\u00e9cution rapide et IA intelligente \u2014 parce que les entreprises qui investissent dans leur cr\u00e9dibilit\u00e9 sont celles qui gagnent.",
     link: "Voir nos services",
   },
   sections: {
@@ -348,17 +348,17 @@ const contentFR = {
         "Le portfolio couvre plusieurs secteurs et plusieurs objectifs : image, acquisition, qualification, digitalisation metier et support operationnel.",
     },
     cta: {
-      eyebrow: "Demande de devis",
-      title: "Parlez-nous de votre projet.",
+      eyebrow: "Audit gratuit",
+      title: "Envoyez-nous votre site. On vous montre ce qui bloque.",
       text:
-        "Expliquez votre besoin, votre activite et l'objectif vise. Le formulaire est deja structure pour une connexion email, WhatsApp Business ou CRM.",
+        "Partagez votre site ou votre lien Instagram. Sous 48h, vous recevrez un audit personnalis\u00e9 avec 3 recommandations concr\u00e8tes \u2014 100% gratuit, sans engagement.",
       signals: [
-        "Consultation rapide",
-        "Devis sur mesure",
-        "Orientation vers la bonne solution",
+        "Audit vid\u00e9o personnalis\u00e9 gratuit",
+        "R\u00e9ponse sous 48 heures",
+        "Plus que 2 cr\u00e9neaux projet ce mois-ci",
       ],
-      note: "Contact live a connecter avant mise en production finale : email, WhatsApp Business et numero d'appel.",
-      submit: "Preparer ma demande",
+      note: "Ou contactez-nous sur WhatsApp pour un \u00e9change imm\u00e9diat.",
+      submit: "Recevoir mon audit gratuit",
       destinationEmail: "hello@ipdesign.example",
       mailSubjectPrefix: "Demande IPDESIGN",
     },
@@ -1236,6 +1236,39 @@ function bindBriefForm() {
 
     status.textContent = siteContent.ui.formStatusSending;
     window.location.href = `mailto:${destination}?subject=${subject}&body=${body}`;
+  });
+}
+
+// ── Form progress bar (Goal-Gradient + Zeigarnik Effect) ────
+const formProgressBar = document.querySelector("#form-progress-bar");
+const formProgressText = document.querySelector("#form-progress-text");
+const briefForm = document.querySelector("#brief-form");
+
+if (briefForm && formProgressBar) {
+  const formFields = briefForm.querySelectorAll("input, select, textarea");
+  const totalFields = formFields.length;
+
+  function updateProgress() {
+    let filled = 0;
+    formFields.forEach((field) => {
+      if (field.tagName === "SELECT") {
+        if (field.value && field.selectedIndex > 0) filled++;
+      } else if (field.value.trim()) {
+        filled++;
+      }
+    });
+    const progress = filled / totalFields;
+    formProgressBar.style.setProperty("--progress", progress);
+    if (formProgressText) {
+      if (filled === 0) formProgressText.textContent = "";
+      else if (filled === totalFields) formProgressText.textContent = "Ready!";
+      else formProgressText.textContent = `${Math.round(progress * 100)}% done`;
+    }
+  }
+
+  formFields.forEach((field) => {
+    field.addEventListener("input", updateProgress);
+    field.addEventListener("change", updateProgress);
   });
 }
 
