@@ -163,6 +163,68 @@ const contentEN = {
       destinationEmail: "hello@ipdesign.co.uk",
       mailSubjectPrefix: "IPDESIGN Enquiry",
     },
+    problem: {
+      eyebrow: "The real cost of doing nothing",
+      title: "While you wait, your competitors are winning your clients",
+      cards: [
+        { title: "Lost enquiries", text: "Prospects Google you, see an outdated site, and call someone else. Every week." },
+        { title: "Wasted ad spend", text: "Driving paid traffic to a poor site is burning money. Your ads deserve a site that converts." },
+        { title: "Eroded trust", text: "Clients judge your service quality by your website. A dated site says dated service." },
+      ],
+    },
+    differentiation: {
+      eyebrow: "Why IPDESIGN",
+      title: "London-quality design. Smart, transparent pricing.",
+      pillars: [
+        { metric: "\u00a31,500", contrast: "Not \u00a310,000+", text: "Premium agency output without the premium agency invoice. Our Tangier studio cuts overhead, not quality." },
+        { metric: "2\u20136 weeks", contrast: "Not 3\u20134 months", text: "From brief to launch, fast. Direct communication, streamlined process, no bloated timelines." },
+        { metric: "Your code", contrast: "No lock-in", text: "Full code ownership, no hidden fees. Modern stack (Next.js, React, Vercel, Supabase) \u2014 future-proof." },
+      ],
+    },
+    proof: {
+      eyebrow: "Trusted across sectors",
+      stats: [
+        { value: "14+", label: "projects delivered" },
+        { value: "8", label: "sectors served" },
+        { value: "2\u20136 wk", label: "average delivery" },
+      ],
+      categories: [
+        { name: "Professional Services & Healthcare", angle: "Credibility & acquisition" },
+        { name: "Transport & Logistics", angle: "Visibility & management" },
+        { name: "Property & Lettings", angle: "Showcase & qualification" },
+        { name: "Agencies & Services", angle: "Positioning & quotes" },
+        { name: "Hospitality, Retail & Lifestyle", angle: "Brand & launch" },
+        { name: "AI & Business Solutions", angle: "Automation & support" },
+      ],
+    },
+    objections: {
+      eyebrow: "Common questions",
+      title: "We get it. You\u2019ve been burned before.",
+      items: [
+        { q: "How can you be this cheap and still be good?", a: "Our Tangier studio has lower overhead than London agencies, but the same design standards. You\u2019re paying for quality, not a postcode." },
+        { q: "I\u2019ve been burned by agencies before", a: "Full code ownership, transparent pricing, no lock-in. You see everything we build and own it all. Start with a free audit \u2014 zero risk." },
+        { q: "We don\u2019t have time for a long project", a: "2\u20136 weeks from brief to launch. Our streamlined process means fast decisions and no bloated timelines." },
+      ],
+      comparison: {
+        headers: ["", "London Agency", "DIY / Templates", "IPDESIGN"],
+        rows: [
+          ["Cost", "\u00a310,000+", "\u00a30\u2013500", "From \u00a31,500"],
+          ["Timeline", "3\u20134 months", "Weeks (you do it)", "2\u20136 weeks"],
+          ["Quality", "High", "Generic", "Premium"],
+          ["Ownership", "Often locked in", "You own it", "Full ownership"],
+          ["Strategy", "Sometimes", "None", "Always included"],
+        ],
+      },
+    },
+    ctaSection: {
+      eyebrow: "Ready to stop losing clients?",
+      title: "Get your free site audit",
+      sub: "Send us your site. We\u2019ll send you a personalized video audit with 3 specific recommendations \u2014 completely free, no strings attached.",
+      scarcity: "Only 2 project slots left this month",
+      submit: "Get my free audit",
+      trust: "48-hour response \u00b7 No obligation \u00b7 Your code, always",
+      labels: { name: "Name", email: "Email", url: "Website URL", message: "Message (optional)" },
+    },
   },
   footer: {
     summary:
@@ -361,6 +423,68 @@ const contentFR = {
       submit: "Recevoir mon audit gratuit",
       destinationEmail: "hello@ipdesign.example",
       mailSubjectPrefix: "Demande IPDESIGN",
+    },
+    problem: {
+      eyebrow: "Le vrai co\u00fbt de l\u2019inaction",
+      title: "Pendant que vous attendez, vos concurrents gagnent vos clients",
+      cards: [
+        { title: "Demandes perdues", text: "Les prospects vous cherchent sur Google, voient un site d\u00e9pass\u00e9, et appellent un concurrent. Chaque semaine." },
+        { title: "Budget pub gaspill\u00e9", text: "Envoyer du trafic payant vers un mauvais site, c\u2019est br\u00fbler de l\u2019argent. Vos pubs m\u00e9ritent un site qui convertit." },
+        { title: "Confiance \u00e9rod\u00e9e", text: "Les clients jugent la qualit\u00e9 de vos services par votre site. Un site dat\u00e9 dit un service dat\u00e9." },
+      ],
+    },
+    differentiation: {
+      eyebrow: "Pourquoi IPDESIGN",
+      title: "Design premium. Tarifs transparents.",
+      pillars: [
+        { metric: "15 000 MAD", contrast: "Pas 100 000+", text: "Un r\u00e9sultat d\u2019agence premium sans la facture premium. Notre studio tang\u00e9rois r\u00e9duit les co\u00fbts, pas la qualit\u00e9." },
+        { metric: "2\u20136 sem.", contrast: "Pas 3\u20134 mois", text: "Du brief au lancement, rapidement. Communication directe, processus efficace, pas de d\u00e9lais gonfl\u00e9s." },
+        { metric: "Votre code", contrast: "Sans engagement", text: "Propri\u00e9t\u00e9 compl\u00e8te du code, sans frais cach\u00e9s. Stack moderne (Next.js, React, Vercel, Supabase)." },
+      ],
+    },
+    proof: {
+      eyebrow: "La confiance de multiples secteurs",
+      stats: [
+        { value: "14+", label: "projets livr\u00e9s" },
+        { value: "8", label: "secteurs servis" },
+        { value: "2\u20136 sem.", label: "d\u00e9lai moyen" },
+      ],
+      categories: [
+        { name: "Services professionnels & Sant\u00e9", angle: "Cr\u00e9dibilit\u00e9 & acquisition" },
+        { name: "Transport & Logistique", angle: "Visibilit\u00e9 & gestion" },
+        { name: "Immobilier", angle: "Vitrine & qualification" },
+        { name: "Agences & Services", angle: "Positionnement & devis" },
+        { name: "H\u00f4tellerie, Commerce & Lifestyle", angle: "Marque & lancement" },
+        { name: "IA & Solutions m\u00e9tier", angle: "Automatisation & support" },
+      ],
+    },
+    objections: {
+      eyebrow: "Questions fr\u00e9quentes",
+      title: "On comprend. Vous avez d\u00e9j\u00e0 \u00e9t\u00e9 d\u00e9\u00e7u.",
+      items: [
+        { q: "Comment pouvez-vous \u00eatre si abordables et rester bons ?", a: "Notre studio \u00e0 Tanger a des co\u00fbts inf\u00e9rieurs aux agences europ\u00e9ennes, mais les m\u00eames standards de design. Vous payez la qualit\u00e9, pas le code postal." },
+        { q: "J\u2019ai d\u00e9j\u00e0 \u00e9t\u00e9 d\u00e9\u00e7u par des agences", a: "Propri\u00e9t\u00e9 compl\u00e8te du code, tarifs transparents, sans engagement. Commencez par un audit gratuit \u2014 z\u00e9ro risque." },
+        { q: "On n\u2019a pas le temps pour un long projet", a: "2 \u00e0 6 semaines du brief au lancement. Notre processus efficace \u00e9limine les d\u00e9lais inutiles." },
+      ],
+      comparison: {
+        headers: ["", "Agence traditionnelle", "DIY / Templates", "IPDESIGN"],
+        rows: [
+          ["Co\u00fbt", "100 000+ MAD", "0\u20135 000 MAD", "D\u00e8s 15 000 MAD"],
+          ["D\u00e9lai", "3\u20134 mois", "Semaines (vous-m\u00eame)", "2\u20136 semaines"],
+          ["Qualit\u00e9", "\u00c9lev\u00e9e", "G\u00e9n\u00e9rique", "Premium"],
+          ["Propri\u00e9t\u00e9", "Souvent verrouill\u00e9", "Vous le poss\u00e9dez", "Propri\u00e9t\u00e9 totale"],
+          ["Strat\u00e9gie", "Parfois", "Aucune", "Toujours incluse"],
+        ],
+      },
+    },
+    ctaSection: {
+      eyebrow: "Pr\u00eat \u00e0 arr\u00eater de perdre des clients ?",
+      title: "Obtenez votre audit gratuit",
+      sub: "Envoyez-nous votre site. Nous vous enverrons un audit vid\u00e9o personnalis\u00e9 avec 3 recommandations sp\u00e9cifiques \u2014 enti\u00e8rement gratuit, sans engagement.",
+      scarcity: "Plus que 2 places ce mois-ci",
+      submit: "Obtenir mon audit gratuit",
+      trust: "R\u00e9ponse sous 48h \u00b7 Sans obligation \u00b7 Votre code, toujours",
+      labels: { name: "Nom", email: "Email", url: "URL du site", message: "Message (optionnel)" },
     },
   },
   footer: {
