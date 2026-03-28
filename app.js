@@ -1061,13 +1061,20 @@ function renderPillars() {
 }
 
 // ── Render services (horizontal scroll panels) ─────────────────────
+const serviceBgImages = [
+  "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=40",
+  "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=800&q=40",
+  "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=800&q=40",
+  "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=40",
+];
+
 function renderServices() {
   const track = document.querySelector("#services-track");
   if (!track) return;
   const svcs = servicesData[currentLang];
 
   track.innerHTML = svcs.slice(0, 4).map((s, i) => `
-    <div class="services-morph__panel">
+    <div class="services-morph__panel" style="--panel-bg:url('${serviceBgImages[i]}')">
       <div class="services-morph__panel-number">NO.${String(i + 1).padStart(2, "0")}</div>
       <h2 class="services-morph__panel-title">${s.title}</h2>
       <p class="services-morph__panel-desc">${s.description}</p>
