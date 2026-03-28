@@ -3,17 +3,13 @@
    Default: English (UK market) | Secondary: French (Morocco market)
    =================================================================== */
 
-// ── Contact info (update these placeholders before going live) ──────
+// ── Contact info ────────────────────────────────────────────────────
 const contactInfo = {
   en: {
-    phone: "+44 (0) 20 XXXX XXXX",
-    phoneHref: "tel:+4402000000000",
     email: "hello@ipdesign.co.uk",
     emailHref: "mailto:hello@ipdesign.co.uk",
   },
   fr: {
-    phone: "+212 XXX XXX XXX",
-    phoneHref: "tel:+212000000000",
     email: "hello@ipdesign.example",
     emailHref: "mailto:hello@ipdesign.example",
   },
@@ -266,7 +262,7 @@ const contentEN = {
   },
   ui: {
     watermark: "DESIGN",
-    serviceViewCta: "View service",
+    serviceViewCta: "Get a quote",
     venturePortfolioLabel: "Multi-sector portfolio",
     ventureFormatLabel: "Solution type",
     portalDetailType: "Solution type",
@@ -527,7 +523,7 @@ const contentFR = {
   },
   ui: {
     watermark: "TANGER",
-    serviceViewCta: "Voir le service",
+    serviceViewCta: "Demander un devis",
     venturePortfolioLabel: "Portfolio multi-secteurs",
     ventureFormatLabel: "Format type",
     portalDetailType: "Solution type",
@@ -951,13 +947,6 @@ function renderStaticContent() {
   setText("#nav-process", siteContent.sections.process.eyebrow);
   setText("#header-cta", siteContent.navigation.cta);
 
-  // Header phone
-  const headerPhone = document.querySelector("#header-phone");
-  if (headerPhone) {
-    headerPhone.textContent = contactInfo[currentLang].phone;
-    headerPhone.href = contactInfo[currentLang].phoneHref;
-  }
-
   // Hero
   setText("#hero-eyebrow", siteContent.hero.eyebrow);
   renderLineTitle("#hero-title", siteContent.hero.titleLines);
@@ -1031,15 +1020,24 @@ function renderStaticContent() {
   setText("#footer-contact-secondary", siteContent.footer.contactSecondary);
   setText("#footer-location", siteContent.footer.location);
 
-  const footerPhone = document.querySelector("#footer-phone");
-  if (footerPhone) {
-    footerPhone.textContent = contactInfo[currentLang].phone;
-    footerPhone.href = contactInfo[currentLang].phoneHref;
-  }
   const footerEmail = document.querySelector("#footer-email");
   if (footerEmail) {
     footerEmail.textContent = contactInfo[currentLang].email;
     footerEmail.href = contactInfo[currentLang].emailHref;
+  }
+
+  // Form consent text
+  const formConsent = document.querySelector("#form-consent");
+  if (formConsent) {
+    formConsent.innerHTML = currentLang === "en"
+      ? 'By submitting this form, you agree to our <a href="/privacy">privacy policy</a>.'
+      : 'En soumettant ce formulaire, vous acceptez notre <a href="/privacy">politique de confidentialit\u00e9</a>.';
+  }
+
+  // Footer privacy link
+  const privacyLink = document.querySelector("#footer-privacy");
+  if (privacyLink) {
+    privacyLink.textContent = currentLang === "en" ? "Privacy Policy" : "Politique de confidentialit\u00e9";
   }
 
   // Language toggle
@@ -1440,24 +1438,102 @@ function bindAuditForm() {
   const form = document.querySelector("#audit-form");
   if (!form) return;
 
-  form.addEventListener("submit", (e) => {
+  const statusEl = document.querySelector("#form-status");
+
+  function showStatus(msg, type) {
+    if (!statusEl) return;
+    statusEl.textContent = msg;
+    statusEl.className = "form-status form-status--" + type;
+  }
+
+  function clearStatus() {
+    if (!statusEl) return;
+    statusEl.textContent = "";
+    statusEl.className = "form-status";
+  }
+
+  function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  function isValidURL(url) {
+    if (!url) return true;
+    try { new URL(url); return true; } catch { return false; }
+  }
+
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
+    clearStatus();
+
     const fd = new FormData(form);
     const vals = Object.fromEntries(fd.entries());
-    const ctaData = siteContent.ctaSection || siteContent.sections.cta;
-    const dest = ctaData.destinationEmail;
 
-    if (!dest || dest.endsWith(".example")) {
-      alert(siteContent.ui.formStatusReady);
+    // Client-side validation
+    if (!vals.name || vals.name.trim().length === 0) {
+      showStatus(currentLang === "en" ? "Please enter your name." : "Veuillez entrer votre nom.", "error");
+      return;
+    }
+    if (!vals.email || !isValidEmail(vals.email)) {
+      showStatus(currentLang === "en" ? "Please enter a valid email." : "Veuillez entrer un email valide.", "error");
+      return;
+    }
+    if (vals.url && !isValidURL(vals.url)) {
+      showStatus(currentLang === "en" ? "Please enter a valid URL." : "Veuillez entrer une URL valide.", "error");
       return;
     }
 
-    const subject = encodeURIComponent(`${ctaData.mailSubjectPrefix || "IPDESIGN Enquiry"} - ${vals.name}`);
-    const body = encodeURIComponent(
-      `Name: ${vals.name}\nEmail: ${vals.email}\nWebsite: ${vals.url || "Not provided"}\n\nMessage:\n${vals.message}`
-    );
+    const submitBtn = form.querySelector('button[type="submit"]');
+    if (submitBtn) submitBtn.disabled = true;
+    showStatus(currentLang === "en" ? "Sending..." : "Envoi en cours...", "sending");
 
-    window.location.href = `mailto:${dest}?subject=${subject}&body=${body}`;
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: vals.name.trim(),
+          email: vals.email.trim(),
+          url: vals.url ? vals.url.trim() : "",
+          message: vals.message ? vals.message.trim() : "",
+          website: vals.website || "",
+        }),
+      });
+
+      if (res.ok) {
+        showStatus(
+          currentLang === "en"
+            ? "Thank you! Your request has been sent. We\u2019ll get back to you within 48 hours."
+            : "Merci ! Votre demande a \u00e9t\u00e9 envoy\u00e9e. Nous vous r\u00e9pondrons sous 48 heures.",
+          "success"
+        );
+        form.reset();
+      } else {
+        const data = await res.json().catch(() => ({}));
+        showStatus(
+          data.error || (currentLang === "en" ? "Something went wrong. Please try again." : "Une erreur est survenue. Veuillez r\u00e9essayer."),
+          "error"
+        );
+      }
+    } catch {
+      // Fallback to mailto if API is unavailable
+      const ctaData = siteContent.ctaSection || siteContent.sections.cta;
+      const dest = ctaData.destinationEmail;
+      if (dest && !dest.endsWith(".example")) {
+        const subject = encodeURIComponent(`${ctaData.mailSubjectPrefix || "IPDESIGN Enquiry"} - ${vals.name}`);
+        const body = encodeURIComponent(
+          `Name: ${vals.name}\nEmail: ${vals.email}\nWebsite: ${vals.url || "N/A"}\n\nMessage:\n${vals.message}`
+        );
+        window.location.href = `mailto:${dest}?subject=${subject}&body=${body}`;
+        showStatus(currentLang === "en" ? "Opening your email client..." : "Ouverture de votre client email...", "success");
+      } else {
+        showStatus(
+          currentLang === "en" ? "Something went wrong. Please email us at hello@ipdesign.co.uk" : "Une erreur est survenue. Contactez-nous \u00e0 hello@ipdesign.co.uk",
+          "error"
+        );
+      }
+    } finally {
+      if (submitBtn) submitBtn.disabled = false;
+    }
   });
 }
 
@@ -1489,6 +1565,39 @@ function setLanguage(lang) {
   requestAnimationFrame(() => {
     initGSAP();
     window.scrollTo(0, 0);
+  });
+}
+
+// ── Mobile Hamburger Menu ───────────────────────────────────────────
+function bindHamburger() {
+  const btn = document.querySelector("#hamburger");
+  const nav = document.querySelector("#site-nav");
+  if (!btn || !nav) return;
+
+  function closeMenu() {
+    btn.setAttribute("aria-expanded", "false");
+    nav.classList.remove("is-open");
+    document.body.classList.remove("nav-open");
+  }
+
+  btn.addEventListener("click", () => {
+    const isOpen = btn.getAttribute("aria-expanded") === "true";
+    btn.setAttribute("aria-expanded", String(!isOpen));
+    nav.classList.toggle("is-open");
+    document.body.classList.toggle("nav-open");
+  });
+
+  // Close menu when clicking a nav link (anchor navigation)
+  nav.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", closeMenu);
+  });
+
+  // Close on escape
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && nav.classList.contains("is-open")) {
+      closeMenu();
+      btn.focus();
+    }
   });
 }
 
@@ -1529,6 +1638,7 @@ function initializePage() {
   renderComparison();
   renderProcess();
   bindAuditForm();
+  bindHamburger();
   bindLanguageToggle();
 
   // Wait for GSAP to be available, then initialize
