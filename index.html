@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Syne:wght@500;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&family=Lexend+Deca:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
     <link rel="icon" type="image/svg+xml" href="/logo4.svg" />
@@ -19,39 +19,39 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="page-shell">
-      <header class="site-header" data-reveal>
-        <div class="container site-header__inner">
-          <a class="brand" href="#top" aria-label="IPDESIGN Home">
-            <img class="brand__logo" src="/logo4.svg" alt="" />
-          </a>
-          <nav class="site-nav" aria-label="Main navigation">
-            <a href="#services" id="nav-services">Services</a>
-            <a href="#why" id="nav-why">Why Us</a>
-            <a href="#proof" id="nav-proof">Portfolio</a>
-            <a href="#process" id="nav-process">Process</a>
-            <a href="/dashboard" id="nav-dashboard">Dashboard Demo</a>
-          </nav>
+    <!-- Header — outside smooth-wrapper, stays fixed -->
+    <header class="site-header">
+      <div class="container header__inner">
+        <a class="brand" href="#top" aria-label="IPDESIGN Home">
+          <img class="brand__logo" src="/logo4.svg" alt="IPDESIGN" />
+        </a>
+        <nav class="site-nav" aria-label="Main navigation">
+          <a href="#services" id="nav-services">Services</a>
+          <a href="#why" id="nav-why">Why Us</a>
+          <a href="#proof" id="nav-proof">Portfolio</a>
+          <a href="#process" id="nav-process">Process</a>
+        </nav>
+        <div class="header__actions">
           <a class="header-phone" href="tel:+4402000000000" id="header-phone">+44 (0) 20 XXXX XXXX</a>
-          <a class="button button--ghost button--compact" href="#contact" id="header-cta">Get a Quote</a>
+          <a class="button button--primary button--compact" href="#contact" id="header-cta">Get a Quote</a>
           <button class="lang-toggle" type="button" id="lang-toggle" aria-label="Switch language">FR</button>
         </div>
-      </header>
+      </div>
+    </header>
 
-      <main>
-        <!-- Section 1 — Hero -->
-        <section class="hero section section--flush" id="top" data-reveal>
-          <div class="hero__backdrop" aria-hidden="true">
-            <div class="hero__gradient hero__gradient--one"></div>
-            <div class="hero__gradient hero__gradient--two"></div>
-            <div class="hero__grid"></div>
-            <div class="hero__sequence" aria-hidden="true">
-              <canvas class="hero__sequence-canvas" width="1280" height="720"></canvas>
+    <!-- GSAP ScrollSmoother wrapper -->
+    <div id="smooth-wrapper">
+      <div id="smooth-content">
+        <main>
+          <!-- Section 1 — Hero -->
+          <section class="hero" id="top" data-reveal>
+            <!-- Blue motion backdrop -->
+            <div class="hero__backdrop" aria-hidden="true">
+              <div class="hero__gradient hero__gradient--one"></div>
+              <div class="hero__gradient hero__gradient--two"></div>
+              <div class="hero__grid"></div>
             </div>
-          </div>
-
-          <div class="container hero__layout">
-            <div class="hero__content" data-reveal data-delay="0">
+            <div class="hero__inner container">
               <p class="eyebrow" id="hero-eyebrow"></p>
               <h1 class="hero-title" id="hero-title"></h1>
               <p class="hero__lead" id="hero-lead"></p>
@@ -61,83 +61,132 @@
               </div>
               <div class="trust-bar" id="trust-bar"></div>
             </div>
-          </div>
-        </section>
+            <div class="hero__tagline" aria-hidden="true">
+              <span class="hero__tagline-text">UNFORGETTABLE</span>
+            </div>
+            <p class="hero__sub">AWARD-WINNING DESIGN &amp; DEVELOPMENT STUDIO EST. 2024</p>
+          </section>
 
-        <!-- Section 2 — Problem / Agitation -->
-        <section class="section problem" id="problem" data-reveal>
-          <div class="container">
-            <div class="problem__grid">
-              <div class="problem__copy">
-                <p class="eyebrow" id="problem-eyebrow"></p>
-                <h2 id="problem-title"></h2>
+          <!-- Section 2 — About -->
+          <section class="section about" id="about" data-reveal>
+            <div class="about__grid container">
+              <div class="about__left anim-reveal">
+                <h2 id="about-title"></h2>
               </div>
-              <div class="problem__cards" id="problem-cards"></div>
+              <div class="about__right anim-reveal">
+                <p id="about-text-1"></p>
+                <p id="about-text-2"></p>
+              </div>
             </div>
-            <blockquote class="manifesto" id="manifesto-quote"></blockquote>
-          </div>
-        </section>
+          </section>
 
-        <!-- Section 3 — Solution Reveal / Differentiation -->
-        <section class="section differentiation" id="why" data-reveal>
-          <div class="container">
-            <div class="section-heading section-heading--center">
-              <p class="eyebrow" id="why-eyebrow"></p>
-              <h2 id="why-title"></h2>
+          <!-- Section 3 — Gallery -->
+          <section class="section gallery" id="gallery" data-reveal>
+            <div class="gallery__content">
+              <div class="gallery__image-stack" id="gallery-stack">
+                <img class="gallery__img" src="" alt="IPDESIGN workspace" />
+                <img class="gallery__img" src="" alt="IPDESIGN workspace" />
+                <img class="gallery__img" src="" alt="IPDESIGN workspace" />
+                <img class="gallery__img" src="" alt="IPDESIGN workspace" />
+              </div>
             </div>
-            <div class="pillars" id="pillars-grid"></div>
-          </div>
-        </section>
+          </section>
 
-        <!-- Section 4 — Services Grid -->
-        <section class="section" id="services" data-reveal>
-          <div class="container">
-            <div class="section-heading section-heading--center">
-              <p class="eyebrow" id="services-eyebrow"></p>
-              <h2 id="services-title"></h2>
+          <!-- Section 4 — Projects Showcase -->
+          <section class="section projects" id="proof" data-reveal>
+            <div class="projects__wrapper">
+              <div class="projects__images" id="project-images"></div>
+              <div class="projects__details">
+                <div class="projects__counter">
+                  <span class="animated-number" id="project-counter">01</span>
+                </div>
+                <div class="projects__meta-list" id="project-meta-list"></div>
+              </div>
             </div>
-            <div class="services-grid" id="services-grid"></div>
-          </div>
-        </section>
+            <div class="projects__label" id="projects-label">Latest Projects</div>
+          </section>
 
-        <!-- Section 5 — Social Proof / Portfolio -->
-        <section class="section proof" id="proof" data-reveal>
-          <div class="container">
-            <div class="proof__grid">
-              <div class="proof__stats" id="proof-stats"></div>
-              <div class="proof__portfolio" id="proof-portfolio"></div>
+          <!-- Section 5 — Kinetic Typography -->
+          <section class="section kinetic-type" id="kinetic" data-reveal>
+            <p class="kinetic-type__intro" id="kinetic-intro"></p>
+            <div class="kinetic-type__text">
+              <span class="kinetic-line" data-speed="1.2">14+ PROJECTS</span>
+              <span class="kinetic-line" data-speed="0.8">AND COUNTING</span>
             </div>
-            <div class="proof__wordcloud" id="proof-wordcloud"></div>
-          </div>
-        </section>
+          </section>
 
-        <!-- Section 6 — Objection Crusher -->
-        <section class="section objections" id="faq" data-reveal>
-          <div class="container">
-            <div class="section-heading section-heading--center">
-              <p class="eyebrow" id="faq-eyebrow"></p>
-              <h2 id="faq-title"></h2>
+          <!-- Section 6 — Stats -->
+          <section class="section stats" id="stats" data-reveal>
+            <div class="stats__grid container">
+              <div class="stats__big">
+                <span class="stats__number" data-count-to="14" data-count-suffix="+">0</span>
+                <span class="stats__label" id="stats-label"></span>
+              </div>
+              <div class="stats__text">
+                <span class="stats__word" data-speed="1.1">MADE FOR</span>
+                <span class="stats__word" data-speed="0.9">IMPACT</span>
+              </div>
             </div>
-            <div class="accordion" id="faq-accordion"></div>
-            <div class="comparison-table" id="comparison-table"></div>
-          </div>
-        </section>
+          </section>
 
-        <!-- Section 7 — Process Timeline -->
-        <section class="section" id="process" data-reveal>
-          <div class="container">
-            <div class="section-heading section-heading--center">
-              <p class="eyebrow" id="process-eyebrow"></p>
-              <h2 id="process-title"></h2>
+          <!-- Section 7 — Description / Why Us -->
+          <section class="section differentiation" id="why" data-reveal>
+            <div class="container">
+              <div class="section-heading">
+                <p class="eyebrow" id="why-eyebrow"></p>
+                <h2 id="why-title"></h2>
+              </div>
+              <div class="pillars" id="pillars-grid" data-reveal-stagger></div>
             </div>
-            <div class="timeline" id="timeline"></div>
-          </div>
-        </section>
+          </section>
 
-        <!-- Section 8 — Final CTA / Free Audit Form -->
-        <section class="section section--cta cta-section" id="contact" data-reveal>
-          <div class="container">
-            <div class="cta-section__grid">
+          <!-- Section 8 — Services Horizontal Scroll -->
+          <section class="section services-morph" id="services" data-reveal>
+            <div class="container">
+              <div class="section-heading">
+                <p class="eyebrow" id="services-eyebrow"></p>
+                <h2 id="services-title"></h2>
+              </div>
+            </div>
+            <div class="services-morph__track" id="services-track"></div>
+            <div class="services-morph__shape" aria-hidden="true">
+              <svg id="morph-svg" viewBox="0 0 400 400">
+                <circle id="morph-shape" cx="200" cy="200" r="150" fill="none" stroke="currentColor" stroke-width="1" opacity="0.15" />
+              </svg>
+            </div>
+          </section>
+
+          <!-- Section 9 — FAQ / Objections -->
+          <section class="section objections" id="faq" data-reveal>
+            <div class="container">
+              <div class="section-heading">
+                <p class="eyebrow" id="faq-eyebrow"></p>
+                <h2 id="faq-title"></h2>
+              </div>
+              <div class="accordion" id="faq-accordion"></div>
+              <div class="comparison-table" id="comparison-table"></div>
+            </div>
+          </section>
+
+          <!-- Section 10 — Process Timeline -->
+          <section class="section" id="process" data-reveal>
+            <div class="container">
+              <div class="section-heading">
+                <p class="eyebrow" id="process-eyebrow"></p>
+                <h2 id="process-title"></h2>
+              </div>
+              <div class="timeline" id="timeline"></div>
+            </div>
+          </section>
+
+          <!-- Section 11 — Marquee Ticker -->
+          <section class="marquee-section" data-reveal>
+            <div class="marquee__track" id="marquee-track"></div>
+          </section>
+
+          <!-- Section 12 — Contact CTA -->
+          <section class="section cta-section" id="contact" data-reveal>
+            <div class="cta-section__grid container">
               <div class="cta-section__copy">
                 <p class="eyebrow" id="cta-eyebrow"></p>
                 <h2 id="cta-title"></h2>
@@ -165,36 +214,44 @@
               </form>
             </div>
             <p class="trust-line" id="audit-trust"></p>
-          </div>
-        </section>
-      </main>
+          </section>
+        </main>
 
-      <footer class="site-footer">
-        <div class="container site-footer__grid">
-          <div>
-            <a class="brand brand--footer" href="#top" aria-label="Back to top">
-              <img class="brand__logo" src="/logo4.svg" alt="" />
-            </a>
-            <p class="site-footer__summary" id="footer-summary"></p>
+        <!-- Footer — inside smooth-content, after main -->
+        <footer class="site-footer">
+          <div class="container site-footer__grid">
+            <div>
+              <a class="brand brand--footer" href="#top" aria-label="Back to top">
+                <img class="brand__logo" src="/logo4.svg" alt="" />
+              </a>
+              <p class="site-footer__summary" id="footer-summary"></p>
+            </div>
+            <div>
+              <p class="footer-title" id="footer-links-title"></p>
+              <a href="#services" id="footer-link-services"></a>
+              <a href="#why" id="footer-link-why"></a>
+              <a href="#proof" id="footer-link-proof"></a>
+            </div>
+            <div>
+              <p class="footer-title" id="footer-contact-title"></p>
+              <a href="#contact" id="footer-contact-primary"></a>
+              <a href="#process" id="footer-contact-secondary"></a>
+              <a class="footer-contact-link" href="tel:+4402000000000" id="footer-phone"></a>
+              <a class="footer-contact-link" href="mailto:hello@ipdesign.co.uk" id="footer-email"></a>
+              <span id="footer-location"></span>
+            </div>
           </div>
-          <div>
-            <p class="footer-title" id="footer-links-title"></p>
-            <a href="#services" id="footer-link-services"></a>
-            <a href="#why" id="footer-link-why"></a>
-            <a href="#proof" id="footer-link-proof"></a>
-          </div>
-          <div>
-            <p class="footer-title" id="footer-contact-title"></p>
-            <a href="#contact" id="footer-contact-primary"></a>
-            <a href="#process" id="footer-contact-secondary"></a>
-            <a class="footer-contact-link" href="tel:+4402000000000" id="footer-phone"></a>
-            <a class="footer-contact-link" href="mailto:hello@ipdesign.co.uk" id="footer-email"></a>
-            <span id="footer-location"></span>
-          </div>
-        </div>
-      </footer>
+        </footer>
+      </div>
     </div>
 
+    <!-- GSAP + plugins -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/SplitText.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/Observer.min.js"></script>
+
+    <!-- App -->
     <script src="app.js"></script>
   </body>
 </html>

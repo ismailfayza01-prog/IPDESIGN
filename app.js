@@ -924,69 +924,31 @@ let ventures = venturesData[currentLang];
 let intakeRequests = intakeData[currentLang];
 
 // ── DOM references ──────────────────────────────────────────────────
-const servicesGrid = document.querySelector("#services-grid");
-const industriesCloud = document.querySelector("#industries-cloud");
-const processList = document.querySelector("#process-list");
-const venturesGrid = document.querySelector("#ventures-grid");
-const portalList = document.querySelector("#portal-list");
-const portalDetail = document.querySelector("#portal-detail");
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-const canHover = window.matchMedia("(hover: hover) and (pointer: fine)");
+const isMobile = window.matchMedia("(max-width: 1024px)");
 
 // ── Helpers ─────────────────────────────────────────────────────────
 function setText(selector, value) {
-  const element = document.querySelector(selector);
-
-  if (element) {
-    element.textContent = value;
-  }
-}
-
-function renderInlineItems(selector, items, className) {
-  const element = document.querySelector(selector);
-
-  if (!element) {
-    return;
-  }
-
-  element.innerHTML = items
-    .map((item) => `<span${className ? ` class="${className}"` : ""}>${item}</span>`)
-    .join("");
-}
-
-function renderListItems(selector, items) {
-  const element = document.querySelector(selector);
-
-  if (!element) {
-    return;
-  }
-
-  element.innerHTML = items.map((item) => `<li>${item}</li>`).join("");
+  const el = document.querySelector(selector);
+  if (el) el.textContent = value;
 }
 
 function renderLineTitle(selector, lines) {
-  const element = document.querySelector(selector);
-
-  if (!element) {
-    return;
-  }
-
-  element.innerHTML = lines.map((line) => `<span class="hero-title__line">${line}</span>`).join("");
+  const el = document.querySelector(selector);
+  if (!el) return;
+  el.innerHTML = lines.map(line => `<span class="hero-title__line">${line}</span>`).join("");
 }
 
 // ── Render static content ───────────────────────────────────────────
 function renderStaticContent() {
   document.title = siteContent.meta.title;
-  document.querySelector('meta[name="description"]').setAttribute("content", siteContent.meta.description);
+  document.querySelector('meta[name="description"]')?.setAttribute("content", siteContent.meta.description);
 
-  setText("#brand-text", siteContent.brand);
-  setText("#footer-brand-text", siteContent.brand);
-
+  // Navigation
   setText("#nav-services", siteContent.navigation.services);
   setText("#nav-why", siteContent.navigation.why);
-  setText("#nav-portal", siteContent.navigation.portal);
-  setText("#nav-ventures", siteContent.navigation.ventures);
-  setText("#nav-dashboard", siteContent.navigation.dashboard);
+  setText("#nav-proof", siteContent.navigation.ventures || "Portfolio");
+  setText("#nav-process", siteContent.sections.process.eyebrow);
   setText("#header-cta", siteContent.navigation.cta);
 
   // Header phone
@@ -996,114 +958,79 @@ function renderStaticContent() {
     headerPhone.href = contactInfo[currentLang].phoneHref;
   }
 
+  // Hero
   setText("#hero-eyebrow", siteContent.hero.eyebrow);
   renderLineTitle("#hero-title", siteContent.hero.titleLines);
   setText("#hero-lead", siteContent.hero.lead);
   setText("#hero-primary-cta", siteContent.hero.primaryCta);
+  setText("#hero-ghost-cta", siteContent.hero.tertiaryCta || siteContent.hero.secondaryCta);
 
-  // "Book a free 15-min call" / phone CTA
-  const heroCallCta = document.querySelector("#hero-call-cta");
-  if (heroCallCta) {
-    heroCallCta.textContent = siteContent.hero.secondaryCta;
-    heroCallCta.href = contactInfo[currentLang].phoneHref;
-  }
-
-  // Tertiary CTA (View our services)
-  const heroTertiaryCta = document.querySelector("#hero-tertiary-cta");
-  if (heroTertiaryCta) {
-    heroTertiaryCta.textContent = siteContent.hero.tertiaryCta;
-  }
-
-  renderListItems("#hero-signals", siteContent.hero.signals);
-
-  setText("#hero-panel-eyebrow", siteContent.hero.panel.eyebrow);
-  setText("#hero-panel-title", siteContent.hero.panel.title);
-  setText("#hero-panel-status", siteContent.hero.panel.status);
-  setText("#hero-card-primary-title", siteContent.hero.panel.primaryTitle);
-  setText("#hero-card-primary-meta", siteContent.hero.panel.primaryMeta);
-  setText("#hero-card-primary-text", siteContent.hero.panel.primaryText);
-  setText("#hero-card-secondary-title", siteContent.hero.panel.secondaryTitle);
-  setText("#hero-card-secondary-meta", siteContent.hero.panel.secondaryMeta);
-  renderInlineItems("#hero-card-tags", siteContent.hero.panel.tags);
-  setText("#hero-card-tertiary-label", siteContent.hero.panel.tertiaryLabel);
-  setText("#hero-card-tertiary-title", siteContent.hero.panel.tertiaryTitle);
-
-  setText("#trust-band-text", siteContent.trustBand.text);
-  renderInlineItems("#trust-band-items", siteContent.trustBand.items);
-
-  setText("#showcase-eyebrow", siteContent.showcase.eyebrow);
-  const showcaseMarquee = document.querySelector("#showcase-marquee");
-  if (showcaseMarquee) {
-    showcaseMarquee.innerHTML = [...siteContent.showcase.items, ...siteContent.showcase.items]
-      .map((item) => `<span>${item}</span>`)
+  // Trust bar (render as signal list)
+  const trustBar = document.querySelector("#trust-bar");
+  if (trustBar) {
+    trustBar.innerHTML = siteContent.hero.signals
+      .map(s => `<span class="trust-signal">${s}</span>`)
       .join("");
   }
 
-  setText("#manifesto-eyebrow", siteContent.manifesto.eyebrow);
-  setText("#manifesto-title", siteContent.manifesto.title);
-  setText("#manifesto-text", siteContent.manifesto.text);
-  setText("#manifesto-link", siteContent.manifesto.link);
+  // About section — use manifesto content
+  setText("#about-title", siteContent.manifesto.title);
+  setText("#about-text-1", siteContent.manifesto.text);
+  setText("#about-text-2", siteContent.sections.why.text);
 
+  // Kinetic intro
+  setText("#kinetic-intro", currentLang === "en"
+    ? "Delivering results across multiple industries, and we're just getting started."
+    : "Des résultats dans plusieurs secteurs, et ce n'est que le début.");
+
+  // Stats label
+  setText("#stats-label", currentLang === "en"
+    ? "PROJECTS DELIVERED ACROSS INDUSTRIES WITH MEASURABLE RESULTS"
+    : "PROJETS LIVRÉS DANS PLUSIEURS SECTEURS AVEC DES RÉSULTATS MESURABLES");
+
+  // Why / Differentiation
+  setText("#why-eyebrow", siteContent.sections.differentiation.eyebrow);
+  setText("#why-title", siteContent.sections.differentiation.title);
+
+  // Services
   setText("#services-eyebrow", siteContent.sections.services.eyebrow);
   setText("#services-title", siteContent.sections.services.title);
-  setText("#services-text", siteContent.sections.services.text);
 
-  setText("#why-eyebrow", siteContent.sections.why.eyebrow);
-  setText("#why-title", siteContent.sections.why.title);
-  setText("#why-text", siteContent.sections.why.text);
+  // FAQ
+  setText("#faq-eyebrow", siteContent.sections.objections.eyebrow);
+  setText("#faq-title", siteContent.sections.objections.title);
 
-  const whyPanels = document.querySelector("#why-panels");
-  if (whyPanels) {
-    whyPanels.innerHTML = siteContent.sections.why.panels
-      .map(
-        (panel) => `
-          <article class="panel interactive-card">
-            <p class="panel__eyebrow">${panel.eyebrow}</p>
-            <h3>${panel.title}</h3>
-            <p>${panel.text}</p>
-          </article>
-        `,
-      )
-      .join("");
-  }
-
-  setText("#industries-eyebrow", siteContent.sections.industries.eyebrow);
-  setText("#industries-title", siteContent.sections.industries.title);
+  // Process
   setText("#process-eyebrow", siteContent.sections.process.eyebrow);
   setText("#process-title", siteContent.sections.process.title);
 
-  setText("#portal-eyebrow", siteContent.sections.portal.eyebrow);
-  setText("#portal-title", siteContent.sections.portal.title);
-  setText("#portal-text", siteContent.sections.portal.text);
-  setText("#portal-panel-eyebrow", siteContent.sections.portal.panelEyebrow);
-  setText("#portal-panel-title", siteContent.sections.portal.panelTitle);
-  renderInlineItems("#portal-filters", siteContent.sections.portal.filters);
-  setText("#portal-header-request", siteContent.sections.portal.headers.request);
-  setText("#portal-header-status", siteContent.sections.portal.headers.status);
-  setText("#portal-header-priority", siteContent.sections.portal.headers.priority);
+  // CTA
+  const ctaData = siteContent.ctaSection || siteContent.sections.cta;
+  setText("#cta-eyebrow", ctaData.eyebrow);
+  setText("#cta-title", ctaData.title);
+  setText("#cta-text", ctaData.sub || ctaData.text);
+  setText("#cta-scarcity", ctaData.scarcity || "");
+  setText("#audit-submit", ctaData.submit || "");
+  setText("#audit-trust", ctaData.trust || "");
 
-  setText("#ventures-eyebrow", siteContent.sections.ventures.eyebrow);
-  setText("#ventures-title", siteContent.sections.ventures.title);
-  setText("#ventures-text", siteContent.sections.ventures.text);
+  // Form labels
+  const labels = siteContent.ctaSection?.labels || {};
+  setText("#form-label-name", labels.name || "Name");
+  setText("#form-label-email", labels.email || "Email");
+  setText("#form-label-url", labels.url || "Website URL");
+  setText("#form-label-message", labels.message || "Message");
 
-  setText("#cta-eyebrow", siteContent.sections.cta.eyebrow);
-  setText("#cta-title", siteContent.sections.cta.title);
-  setText("#cta-text", siteContent.sections.cta.text);
-  renderListItems("#cta-signals", siteContent.sections.cta.signals);
-  setText("#cta-note", siteContent.sections.cta.note);
-  setText("#brief-submit", siteContent.sections.cta.submit);
-
+  // Footer
   setText("#footer-summary", siteContent.footer.summary);
   setText("#footer-links-title", siteContent.footer.linksTitle);
   setText("#footer-contact-title", siteContent.footer.contactTitle);
   setText("#footer-link-services", siteContent.footer.links.services);
-  setText("#footer-link-portal", siteContent.footer.links.portal);
-  setText("#footer-link-ventures", siteContent.footer.links.ventures);
+  setText("#footer-link-why", siteContent.footer.links.portal || "Solutions");
+  setText("#footer-link-proof", siteContent.footer.links.ventures || "Portfolio");
   setText("#footer-contact-primary", siteContent.footer.contactPrimary);
   setText("#footer-contact-secondary", siteContent.footer.contactSecondary);
   setText("#footer-location", siteContent.footer.location);
 
-  // Footer phone & email
   const footerPhone = document.querySelector("#footer-phone");
   if (footerPhone) {
     footerPhone.textContent = contactInfo[currentLang].phone;
@@ -1115,707 +1042,460 @@ function renderStaticContent() {
     footerEmail.href = contactInfo[currentLang].emailHref;
   }
 
-  // Form labels and placeholders
-  renderFormContent();
-
-  // Watermark
-  const heroContent = document.querySelector(".hero__content");
-  if (heroContent) {
-    heroContent.dataset.watermark = siteContent.ui.watermark;
-  }
-
   // Language toggle
-  const langToggle = document.querySelector("#lang-toggle");
-  if (langToggle) {
-    langToggle.textContent = siteContent.ui.langToggleLabel;
-  }
+  setText("#lang-toggle", siteContent.ui.langToggleLabel);
+  setText("#projects-label", currentLang === "en" ? "Latest Projects" : "Projets récents");
 }
 
-// ── Form content ────────────────────────────────────────────────────
-function renderFormContent() {
-  const form = document.querySelector("#brief-form");
-  if (!form) return;
-
-  const labels = siteContent.form.labels;
-  const placeholders = siteContent.form.placeholders;
-  const options = siteContent.form.options;
-
-  setText("#form-label-project", labels.project);
-  setText("#form-label-company", labels.company);
-  setText("#form-label-need", labels.need);
-  setText("#form-label-timeline", labels.timeline);
-  setText("#form-label-brief", labels.brief);
-
-  const projectInput = form.querySelector('input[name="project"]');
-  if (projectInput) projectInput.placeholder = placeholders.project;
-
-  const companyInput = form.querySelector('input[name="company"]');
-  if (companyInput) companyInput.placeholder = placeholders.company;
-
-  const timelineInput = form.querySelector('input[name="timeline"]');
-  if (timelineInput) timelineInput.placeholder = placeholders.timeline;
-
-  const briefTextarea = form.querySelector('textarea[name="brief"]');
-  if (briefTextarea) briefTextarea.placeholder = placeholders.brief;
-
-  const needSelect = form.querySelector('select[name="need"]');
-  if (needSelect) {
-    needSelect.innerHTML =
-      `<option value="">${placeholders.selectDefault}</option>` +
-      options.map((opt) => `<option>${opt}</option>`).join("");
-  }
+// ── Render pillars (differentiation cards) ──────────────────────────
+function renderPillars() {
+  const grid = document.querySelector("#pillars-grid");
+  if (!grid) return;
+  const pillars = siteContent.sections.differentiation.pillars;
+  grid.innerHTML = pillars.map(p => `
+    <article class="pillar-card" data-reveal>
+      <div class="pillar-card__metric">${p.metric}</div>
+      <div class="pillar-card__contrast">${p.contrast}</div>
+      <p>${p.text}</p>
+    </article>
+  `).join("");
 }
 
-// ── Render services ─────────────────────────────────────────────────
+// ── Render services (horizontal scroll panels) ─────────────────────
 function renderServices() {
-  servicesGrid.innerHTML = services
-    .map(
-      ({ index, title, description, signal, price }, itemIndex) => `
-        <article class="service-card interactive-card" data-reveal data-delay="${itemIndex * 60}">
-          <div class="service-card__meta">
-            <span>${index}</span>
-            <span>${signal}</span>
-          </div>
-          <div class="service-card__body">
-            <h3>${title}</h3>
-            <p>${description}</p>
-          </div>
-          <span class="service-card__signal">${price}</span>
-        </article>
-      `,
-    )
-    .join("");
-}
+  const track = document.querySelector("#services-track");
+  if (!track) return;
+  const svcs = servicesData[currentLang];
 
-// ── Render industries ───────────────────────────────────────────────
-function renderIndustries() {
-  industriesCloud.innerHTML = industries.map((industry) => `<span class="industry-pill">${industry}</span>`).join("");
-}
-
-// ── Render process ──────────────────────────────────────────────────
-function renderProcess() {
-  processList.innerHTML = processSteps
-    .map(
-      ({ title, description }, index) => `
-        <article class="process-item interactive-card" data-reveal>
-          <span class="process-item__index">0${index + 1}</span>
-          <div>
-            <h3>${title}</h3>
-            <p>${description}</p>
-          </div>
-        </article>
-      `,
-    )
-    .join("");
-}
-
-// ── Render ventures ─────────────────────────────────────────────────
-function renderVentures() {
-  venturesGrid.innerHTML = ventures
-    .map(
-      ({ name, stage, description, labels, impact }) => `
-        <article class="panel venture-card interactive-card" data-reveal>
-          <div class="venture-card__beam" aria-hidden="true"></div>
-          <div>
-            <div class="venture-card__top">
-              <div>
-                <p class="panel__eyebrow">${siteContent.ui.venturePortfolioLabel}</p>
-                <h3>${name}</h3>
-              </div>
-              <span class="venture-card__stage">${stage}</span>
-            </div>
-            <p>${description}</p>
-            <div class="venture-card__labels">
-              ${labels.map((label) => `<span>${label}</span>`).join("")}
-            </div>
-          </div>
-          <div class="venture-card__footer">
-            <span>${impact}</span>
-            <span>${siteContent.ui.ventureFormatLabel}</span>
-          </div>
-        </article>
-      `,
-    )
-    .join("");
-}
-
-// ── Render portal rows ──────────────────────────────────────────────
-function renderPortalRows() {
-  portalList.innerHTML = intakeRequests
-    .map(
-      (request, index) => `
-        <button class="portal-row ${index === 0 ? "is-active" : ""}" type="button" data-request="${index}">
-          <span class="portal-row__title">
-            <strong>${request.name}</strong>
-            <span>${request.category}</span>
-          </span>
-          <span class="status-dot">${request.status}</span>
-          <span class="priority-pill" data-priority="${request.priority}">${request.priority}</span>
-        </button>
-      `,
-    )
-    .join("");
-}
-
-// ── Render portal detail ────────────────────────────────────────────
-function renderPortalDetail(index) {
-  const request = intakeRequests[index];
-  const ui = siteContent.ui;
-
-  portalDetail.innerHTML = `
-    <div class="portal-detail__header">
-      <div>
-        <p class="panel__eyebrow">${ui.portalDetailType}</p>
-        <h3>${request.name}</h3>
-      </div>
-      <div class="portal-detail__meta">
-        <span class="status-dot">${request.status}</span>
-        <span class="priority-pill" data-priority="${request.priority}">${request.priority}</span>
-      </div>
+  track.innerHTML = svcs.slice(0, 4).map((s, i) => `
+    <div class="services-morph__panel">
+      <div class="services-morph__panel-number">NO.${String(i + 1).padStart(2, "0")}</div>
+      <h2 class="services-morph__panel-title">${s.title}</h2>
+      <p class="services-morph__panel-desc">${s.description}</p>
+      <a class="services-morph__panel-cta" href="#contact">${siteContent.ui.serviceViewCta || "See More"}</a>
     </div>
-    <div class="portal-detail__grid">
-      <div class="portal-detail__item">
-        <strong>${ui.portalDetailTeam}</strong>
-        <span>${request.owner}</span>
-      </div>
-      <div class="portal-detail__item">
-        <strong>${ui.portalDetailUsage}</strong>
-        <span>${request.category}</span>
-      </div>
-      <div class="portal-detail__item">
-        <strong>${ui.portalDetailFocus}</strong>
-        <span>${request.notes}</span>
-      </div>
-      <div class="portal-detail__attachments">
-        <strong>${ui.portalDetailAttachments}</strong>
-        <ul>
-          ${request.attachments.map((attachment) => `<li>${attachment}</li>`).join("")}
-        </ul>
-      </div>
+  `).join("") + `
+    <div class="services-morph__panel services-morph__panel--last">
+      <div class="services-morph__panel-number">NO.05</div>
+      <h2 class="services-morph__panel-title">${currentLang === "en" ? "View All Services" : "Voir tous les services"}</h2>
+      <a class="button button--primary" href="#contact">${siteContent.navigation.cta}</a>
     </div>
   `;
 }
 
-// ── Portal row interaction ──────────────────────────────────────────
-function bindPortalRows() {
-  portalList.addEventListener("click", (event) => {
-    const row = event.target.closest(".portal-row");
+// ── Render projects (portfolio showcase panels) ─────────────────────
+function renderProjects() {
+  const imagesContainer = document.querySelector("#project-images");
+  const metaContainer = document.querySelector("#project-meta-list");
+  if (!imagesContainer || !metaContainer) return;
 
-    if (!row) {
-      return;
-    }
+  const items = venturesData[currentLang].slice(0, 3);
 
-    const activeRow = portalList.querySelector(".portal-row.is-active");
+  // Project images (use colored placeholders)
+  const colors = ["#1a1a2e", "#16213e", "#0f3460"];
+  imagesContainer.innerHTML = items.map((item, i) => `
+    <div class="project-section" style="opacity:${i === 0 ? 1 : 0}">
+      <div class="project-placeholder" style="
+        width:85%;max-height:70vh;aspect-ratio:16/10;
+        border-radius:var(--radius-lg);
+        background:${colors[i]};
+        display:flex;align-items:center;justify-content:center;
+        font-family:'DM Sans',sans-serif;font-size:1.4rem;font-weight:700;
+        color:var(--accent-light);opacity:0.6;
+      ">${item.name}</div>
+    </div>
+  `).join("");
 
-    if (activeRow === row) {
-      return;
-    }
+  // Project metadata
+  metaContainer.innerHTML = items.map((item, i) => `
+    <div class="project-meta" style="opacity:${i === 0 ? 1 : 0};${i !== 0 ? "pointer-events:none;" : ""}position:${i === 0 ? "relative" : "absolute"};top:0;left:0;">
+      <span class="project-meta__country">${item.stage}</span>
+      <h3 class="project-meta__title">${item.name}</h3>
+      <p class="project-meta__desc">${item.description.substring(0, 120)}...</p>
+      <a class="project-meta__link" href="#contact">${currentLang === "en" ? "View project" : "Voir le projet"}</a>
+    </div>
+  `).join("");
+}
 
-    portalList.querySelectorAll(".portal-row").forEach((element) => element.classList.remove("is-active"));
-    row.classList.add("is-active");
+// ── Render FAQ (accordion) ──────────────────────────────────────────
+function renderFAQ() {
+  const faqAccordion = document.querySelector("#faq-accordion");
+  if (!faqAccordion || !siteContent.sections.objections.items) return;
 
-    portalDetail.classList.add("is-switching");
+  faqAccordion.innerHTML = siteContent.sections.objections.items.map(({ q, a }, i) => `
+    <div class="accordion__item${i === 0 ? " is-open" : ""}">
+      <button class="accordion__trigger" type="button" aria-expanded="${i === 0}">${q}<span class="accordion__icon">+</span></button>
+      <div class="accordion__body"><div class="accordion__body-inner">${a}</div></div>
+    </div>
+  `).join("");
 
-    setTimeout(() => {
-      renderPortalDetail(Number(row.dataset.request));
-      portalDetail.classList.remove("is-switching");
-    }, 180);
+  faqAccordion.querySelectorAll(".accordion__trigger").forEach(trigger => {
+    trigger.addEventListener("click", () => {
+      const item = trigger.parentElement;
+      const wasOpen = item.classList.contains("is-open");
+      faqAccordion.querySelectorAll(".accordion__item").forEach(el => el.classList.remove("is-open"));
+      if (!wasOpen) item.classList.add("is-open");
+      trigger.setAttribute("aria-expanded", !wasOpen);
+    });
   });
 }
 
-// ── Brief form ──────────────────────────────────────────────────────
-function bindBriefForm() {
-  const form = document.querySelector("#brief-form");
-  const status = document.querySelector("#brief-status");
+// ── Render comparison table ─────────────────────────────────────────
+function renderComparison() {
+  const compTable = document.querySelector("#comparison-table");
+  if (!compTable || !siteContent.sections.objections.comparison) return;
+  const { headers, rows } = siteContent.sections.objections.comparison;
+  compTable.innerHTML = `
+    <table>
+      <thead><tr>${headers.map(h => `<th>${h}</th>`).join("")}</tr></thead>
+      <tbody>${rows.map(row => `<tr>${row.map((cell, i) => `<td${i === row.length - 1 ? ' class="highlight"' : ""}>${cell}</td>`).join("")}</tr>`).join("")}</tbody>
+    </table>
+  `;
+}
 
-  if (!form || !status) {
+// ── Render process (timeline) ───────────────────────────────────────
+function renderProcess() {
+  const timeline = document.querySelector("#timeline");
+  if (!timeline) return;
+  const steps = processData[currentLang];
+  timeline.innerHTML = steps.map(({ title, description }, i) => `
+    <article class="process-item" data-reveal>
+      <span class="process-item__index">0${i + 1}</span>
+      <div>
+        <h3>${title}</h3>
+        <p>${description}</p>
+      </div>
+    </article>
+  `).join("");
+}
+
+// ── GSAP: Hero Animations ───────────────────────────────────────────
+function setupHeroAnimation() {
+  const hero = document.querySelector(".hero");
+  if (!hero || reduceMotion.matches) return;
+
+  // Clip-path scroll contraction
+  gsap.to(hero, {
+    clipPath: "inset(8% round 24px)",
+    ease: "none",
+    scrollTrigger: {
+      trigger: hero,
+      start: "top top",
+      end: "bottom top",
+      scrub: 1,
+    },
+  });
+
+  // SplitText on hero title
+  const title = document.querySelector(".hero-title");
+  if (title && typeof SplitText !== "undefined") {
+    const split = new SplitText(title, { type: "chars, lines", linesClass: "hero-title__line" });
+    gsap.from(split.chars, {
+      y: 80,
+      opacity: 0,
+      rotationX: -30,
+      stagger: 0.025,
+      duration: 1.2,
+      ease: "power3.out",
+      delay: 0.4,
+    });
+  }
+
+  // Hero lead and CTAs fade in
+  gsap.from(".hero__lead", { y: 30, opacity: 0, duration: 1, ease: "power3.out", delay: 0.9 });
+  gsap.from(".hero-ctas", { y: 30, opacity: 0, duration: 1, ease: "power3.out", delay: 1.1 });
+  gsap.from(".trust-bar", { y: 20, opacity: 0, duration: 0.8, ease: "power3.out", delay: 1.3 });
+  gsap.from(".hero__sub", { opacity: 0, duration: 1, ease: "power2.out", delay: 1.5 });
+
+  // Tagline horizontal scroll parallax
+  const tagline = document.querySelector(".hero__tagline-text");
+  if (tagline) {
+    gsap.to(tagline, {
+      xPercent: -15,
+      ease: "none",
+      scrollTrigger: {
+        trigger: hero,
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+      },
+    });
+  }
+}
+
+// ── GSAP: Pinned Gallery ────────────────────────────────────────────
+function setupGallery() {
+  const gallery = document.querySelector(".gallery");
+  const images = gallery?.querySelectorAll(".gallery__img");
+  if (!gallery || !images?.length || isMobile.matches) return;
+  // Skip if images have no src (empty placeholders would create invisible pinned dead zones)
+  const hasRealImages = Array.from(images).some(img => img.src && !img.src.endsWith("/"));
+  if (!hasRealImages) { gallery.style.display = "none"; return; }
+
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: gallery,
+      start: "top top",
+      end: () => "+=" + images.length * window.innerHeight,
+      pin: true,
+      scrub: true,
+    },
+  });
+
+  images.forEach((img, i) => {
+    if (i === 0) return;
+    tl.fromTo(img, { opacity: 0, scale: 1.08 }, { opacity: 1, scale: 1, duration: 1 }, i * 0.7);
+  });
+}
+
+// ── GSAP: Projects Showcase ─────────────────────────────────────────
+function setupProjects() {
+  const section = document.querySelector(".projects");
+  const projectSections = section?.querySelectorAll(".project-section");
+  const counter = section?.querySelector(".animated-number");
+  const metas = section?.querySelectorAll(".project-meta");
+  if (!section || !projectSections?.length || projectSections.length < 2 || isMobile.matches) return;
+
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: section,
+      start: "top top",
+      end: () => "+=" + projectSections.length * window.innerHeight * 1.5,
+      pin: true,
+      scrub: 1,
+    },
+  });
+
+  for (let i = 1; i < projectSections.length; i++) {
+    tl.to(projectSections[i - 1], { opacity: 0, duration: 0.5 }, i);
+    tl.to(projectSections[i], { opacity: 1, duration: 0.5 }, i);
+
+    if (counter) {
+      tl.to(counter, { textContent: String(i + 1).padStart(2, "0"), duration: 0.01, snap: { textContent: 1 } }, i);
+    }
+
+    if (metas[i - 1]) tl.to(metas[i - 1], { opacity: 0, y: -20, duration: 0.3, position: "absolute" }, i);
+    if (metas[i]) tl.to(metas[i], { opacity: 1, y: 0, duration: 0.3 }, i + 0.2);
+  }
+}
+
+// ── GSAP: Services Horizontal Scroll ────────────────────────────────
+function setupServicesMorph() {
+  const section = document.querySelector(".services-morph");
+  const track = document.querySelector("#services-track");
+  if (!section || !track || isMobile.matches) return;
+
+  const totalWidth = track.scrollWidth;
+
+  gsap.to(track, {
+    x: () => -(totalWidth - window.innerWidth),
+    ease: "none",
+    scrollTrigger: {
+      trigger: section,
+      start: "top top",
+      end: () => "+=" + totalWidth,
+      pin: true,
+      scrub: 1,
+      invalidateOnRefresh: true,
+    },
+  });
+
+  // Show/hide the SVG shape during scroll
+  ScrollTrigger.create({
+    trigger: section,
+    start: "top top",
+    end: "bottom bottom",
+    onEnter: () => section.classList.add("is-active"),
+    onLeave: () => section.classList.remove("is-active"),
+    onEnterBack: () => section.classList.add("is-active"),
+    onLeaveBack: () => section.classList.remove("is-active"),
+  });
+}
+
+// ── GSAP: Kinetic Typography ────────────────────────────────────────
+function setupKineticType() {
+  const lines = document.querySelectorAll(".kinetic-line");
+  if (!lines.length || reduceMotion.matches) return;
+
+  lines.forEach(line => {
+    const speed = parseFloat(line.dataset.speed) || 1;
+    gsap.fromTo(line, {
+      y: 150,
+      rotateX: -30,
+      scale: 0.85,
+      opacity: 0,
+    }, {
+      y: 0,
+      rotateX: 0,
+      scale: 1,
+      opacity: 1,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: line.closest("section"),
+        start: "top 70%",
+        end: "center center",
+        scrub: speed,
+      },
+    });
+  });
+
+  // Intro text
+  const intro = document.querySelector(".kinetic-type__intro");
+  if (intro) {
+    gsap.from(intro, {
+      y: 40, opacity: 0, duration: 1, ease: "power3.out",
+      scrollTrigger: { trigger: intro, start: "top 85%" },
+    });
+  }
+}
+
+// ── GSAP: Stats Counter ─────────────────────────────────────────────
+function setupStatsCounter() {
+  const counters = document.querySelectorAll("[data-count-to]");
+  counters.forEach(el => {
+    const target = parseInt(el.dataset.countTo, 10);
+    const suffix = el.dataset.countSuffix || "";
+
+    ScrollTrigger.create({
+      trigger: el,
+      start: "top 80%",
+      once: true,
+      onEnter: () => {
+        gsap.to({ val: 0 }, {
+          val: target,
+          duration: 1.5,
+          ease: "power2.out",
+          onUpdate: function () {
+            el.textContent = Math.round(this.targets()[0].val) + suffix;
+          },
+        });
+      },
+    });
+  });
+
+  // Stats words parallax
+  document.querySelectorAll(".stats__word").forEach(word => {
+    const speed = parseFloat(word.dataset.speed) || 1;
+    gsap.fromTo(word, { x: -50 }, {
+      x: 50,
+      ease: "none",
+      scrollTrigger: {
+        trigger: word.closest("section"),
+        start: "top bottom",
+        end: "bottom top",
+        scrub: speed,
+      },
+    });
+  });
+}
+
+// ── GSAP: Marquee ───────────────────────────────────────────────────
+function setupMarquee() {
+  const track = document.querySelector("#marquee-track");
+  if (!track) return;
+
+  const text = currentLang === "en" ? "GET IN TOUCH" : "CONTACTEZ-NOUS";
+  const sep = " \u2022 ";
+  track.innerHTML = Array(16).fill(`<span>${text}</span><span class="marquee-dot">${sep}</span>`).join("");
+
+  // Simple CSS-based marquee as GSAP fallback for the infinite loop
+  const totalWidth = track.scrollWidth / 2;
+
+  gsap.to(track, {
+    x: -totalWidth,
+    duration: 25,
+    ease: "none",
+    repeat: -1,
+  });
+}
+
+// ── GSAP: Global Scroll Reveals ─────────────────────────────────────
+function setupScrollReveals() {
+  if (reduceMotion.matches) {
+    document.querySelectorAll(".anim-reveal, .anim-fade, [data-reveal], [data-reveal-stagger] > *")
+      .forEach(el => { el.style.opacity = 1; el.style.transform = "none"; });
     return;
   }
 
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-
-    const formData = new FormData(form);
-    const values = Object.fromEntries(formData.entries());
-    const destination = siteContent.sections.cta.destinationEmail;
-    const eb = siteContent.emailBody;
-
-    if (!destination || destination.endsWith(".example")) {
-      status.textContent = siteContent.ui.formStatusReady;
-      return;
-    }
-
-    const subject = encodeURIComponent(`${siteContent.sections.cta.mailSubjectPrefix} - ${values.project}`);
-    const body = encodeURIComponent(
-      [
-        `${eb.project} : ${values.project}`,
-        `${eb.company} : ${values.company}`,
-        `${eb.need} : ${values.need}`,
-        `${eb.timeline} : ${values.timeline || eb.notSpecified}`,
-        "",
-        `${eb.brief} :`,
-        values.brief,
-      ].join("\n"),
-    );
-
-    status.textContent = siteContent.ui.formStatusSending;
-    window.location.href = `mailto:${destination}?subject=${subject}&body=${body}`;
-  });
-}
-
-// ── Form progress bar (Goal-Gradient + Zeigarnik Effect) ────
-const formProgressBar = document.querySelector("#form-progress-bar");
-const formProgressText = document.querySelector("#form-progress-text");
-const briefForm = document.querySelector("#brief-form");
-
-if (briefForm && formProgressBar) {
-  const formFields = briefForm.querySelectorAll("input, select, textarea");
-  const totalFields = formFields.length;
-
-  function updateProgress() {
-    let filled = 0;
-    formFields.forEach((field) => {
-      if (field.tagName === "SELECT") {
-        if (field.value && field.selectedIndex > 0) filled++;
-      } else if (field.value.trim()) {
-        filled++;
-      }
+  gsap.utils.toArray(".anim-reveal").forEach(el => {
+    gsap.to(el, {
+      y: 0, opacity: 1, duration: 1, ease: "power3.out",
+      scrollTrigger: { trigger: el, start: "top 85%" },
     });
-    const progress = filled / totalFields;
-    formProgressBar.style.setProperty("--progress", progress);
-    if (formProgressText) {
-      if (filled === 0) formProgressText.textContent = "";
-      else if (filled === totalFields) formProgressText.textContent = "Ready!";
-      else formProgressText.textContent = `${Math.round(progress * 100)}% done`;
-    }
-  }
+  });
 
-  formFields.forEach((field) => {
-    field.addEventListener("input", updateProgress);
-    field.addEventListener("change", updateProgress);
+  gsap.utils.toArray(".anim-fade").forEach(el => {
+    gsap.to(el, {
+      y: 0, opacity: 1, duration: 0.8, ease: "power2.out",
+      scrollTrigger: { trigger: el, start: "top 88%" },
+    });
+  });
+
+  gsap.utils.toArray("[data-reveal]").forEach(el => {
+    gsap.to(el, {
+      y: 0, opacity: 1, duration: 0.8, ease: "power3.out",
+      scrollTrigger: { trigger: el, start: "top 85%" },
+    });
+  });
+
+  gsap.utils.toArray("[data-reveal-stagger]").forEach(container => {
+    gsap.to(container.children, {
+      y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "power3.out",
+      scrollTrigger: { trigger: container, start: "top 82%" },
+    });
   });
 }
 
-// ── Header scroll ───────────────────────────────────────────────────
+// ── Header Scroll ───────────────────────────────────────────────────
 function setupHeaderScroll() {
   const header = document.querySelector(".site-header");
+  if (!header) return;
 
-  if (!header) {
-    return;
-  }
-
-  const onScroll = () => {
-    header.classList.toggle("is-scrolled", window.scrollY > 40);
-  };
-
-  window.addEventListener("scroll", onScroll, { passive: true });
-  onScroll();
-}
-
-// ── Reveal animations ───────────────────────────────────────────────
-function setupReveals() {
-  const revealTargets = Array.from(document.querySelectorAll("[data-reveal]"));
-
-  revealTargets.forEach((element) => {
-    element.style.setProperty("--delay", `${element.dataset.delay || 0}ms`);
-  });
-
-  if (reduceMotion.matches || !("IntersectionObserver" in window)) {
-    revealTargets.forEach((element) => element.classList.add("is-visible"));
-    return;
-  }
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) {
-          return;
-        }
-
-        entry.target.classList.add("is-visible");
-        observer.unobserve(entry.target);
-      });
+  ScrollTrigger.create({
+    start: 40,
+    onUpdate: (self) => {
+      header.classList.toggle("is-scrolled", self.scroll() > 40);
     },
-    {
-      threshold: 0.16,
-      rootMargin: "0px 0px -10% 0px",
-    },
-  );
-
-  revealTargets.forEach((element) => observer.observe(element));
-}
-
-// ── Interactive cards ───────────────────────────────────────────────
-function setupInteractiveCards() {
-  if (reduceMotion.matches || !canHover.matches) {
-    return;
-  }
-
-  document.querySelectorAll(".interactive-card").forEach((card) => {
-    if (card.classList.contains("service-card") || card.classList.contains("process-item")) {
-      return;
-    }
-
-    card.addEventListener("pointermove", (event) => {
-      const bounds = card.getBoundingClientRect();
-      const x = event.clientX - bounds.left;
-      const y = event.clientY - bounds.top;
-      const rotateY = ((x / bounds.width) - 0.5) * 6;
-      const rotateX = ((y / bounds.height) - 0.5) * -6;
-
-      card.style.setProperty("--mx", `${x}px`);
-      card.style.setProperty("--my", `${y}px`);
-      card.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
-    });
-
-    card.addEventListener("pointerleave", () => {
-      card.style.transform = "";
-    });
   });
 }
 
-// ── Utility functions ───────────────────────────────────────────────
-function clamp(value, min, max) {
-  return Math.min(Math.max(value, min), max);
+// ── Scroll Progress Bar ─────────────────────────────────────────────
+function setupScrollProgress() {
+  const bar = document.createElement("div");
+  bar.className = "scroll-progress";
+  document.body.prepend(bar);
+
+  ScrollTrigger.create({
+    onUpdate: (self) => {
+      bar.style.transform = `scaleX(${self.progress.toFixed(4)})`;
+    },
+  });
 }
 
-function lerp(start, end, progress) {
-  return start + (end - start) * progress;
-}
+// ── Audit Form ──────────────────────────────────────────────────────
+function bindAuditForm() {
+  const form = document.querySelector("#audit-form");
+  if (!form) return;
 
-// ── Hero sequence animation ─────────────────────────────────────────
-function setupHeroSequence() {
-  const hero = document.querySelector(".hero");
-  const header = document.querySelector(".site-header");
-  const heroContent = document.querySelector(".hero__content");
-  const heroPanel = document.querySelector(".hero__panel");
-  const editorial = document.querySelector(".editorial-break");
-  const editorialTitle = document.querySelector(".editorial-break__title");
-  const editorialSupport = document.querySelector(".editorial-break__support");
-  const servicesSection = document.querySelector("#services");
-  const servicesHeading = servicesSection ? servicesSection.querySelector(".section-heading") : null;
-  const why = document.querySelector("#why");
-  const sequence = document.querySelector(".hero__sequence");
-  const canvas = sequence?.querySelector(".hero__sequence-canvas");
-  const desktopOnly = window.matchMedia("(min-width: 1081px)");
-  const frameCount = 112;
-  const frameFolder = "/Disintegration_and_reintegration__202603231752_frames";
-  const framePrefix = "Disintegration_and_reintegration__202603231752_";
-  const images = Array(frameCount).fill(null);
-  const loadedFrames = new Set();
-  const priorityFrames = [0, 1, 2, 3, 4, 5, 16, 32, 48, 64, 80, 96, 111];
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const fd = new FormData(form);
+    const vals = Object.fromEntries(fd.entries());
+    const ctaData = siteContent.ctaSection || siteContent.sections.cta;
+    const dest = ctaData.destinationEmail;
 
-  if (
-    !hero ||
-    !header ||
-    !heroContent ||
-    !heroPanel ||
-    !editorial ||
-    !editorialTitle ||
-    !editorialSupport ||
-    !servicesSection ||
-    !servicesHeading ||
-    !why ||
-    !sequence ||
-    !canvas ||
-    !desktopOnly.matches
-  ) {
-    return;
-  }
-
-  const context = canvas.getContext("2d", { alpha: true, desynchronized: true });
-
-  if (!context) {
-    return;
-  }
-
-  context.imageSmoothingEnabled = true;
-  context.imageSmoothingQuality = "high";
-
-  let activeFrame = 0;
-  let renderedFrame = -1;
-  let rafId = 0;
-  let lastCanvasWidth = 0;
-  let lastCanvasHeight = 0;
-
-  const frameUrl = (index) => `${frameFolder}/${framePrefix}${String(index + 1).padStart(3, "0")}.jpg`;
-
-  const syncCanvasSize = () => {
-    const bounds = canvas.getBoundingClientRect();
-
-    if (!bounds.width || !bounds.height) {
-      return false;
-    }
-
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const nextWidth = Math.max(1, Math.round(bounds.width * dpr));
-    const nextHeight = Math.max(1, Math.round(bounds.height * dpr));
-
-    const resized = canvas.width !== nextWidth || canvas.height !== nextHeight;
-
-    if (canvas.width !== nextWidth || canvas.height !== nextHeight) {
-      canvas.width = nextWidth;
-      canvas.height = nextHeight;
-    }
-
-    lastCanvasWidth = bounds.width;
-    lastCanvasHeight = bounds.height;
-
-    return resized;
-  };
-
-  const closestLoadedFrame = (index) => {
-    if (loadedFrames.has(index)) {
-      return index;
-    }
-
-    for (let offset = 1; offset < frameCount; offset += 1) {
-      const before = index - offset;
-      const after = index + offset;
-
-      if (before >= 0 && loadedFrames.has(before)) {
-        return before;
-      }
-
-      if (after < frameCount && loadedFrames.has(after)) {
-        return after;
-      }
-    }
-
-    return -1;
-  };
-
-  const drawFrame = (index) => {
-    const resized = syncCanvasSize();
-
-    if (resized === false) {
+    if (!dest || dest.endsWith(".example")) {
+      alert(siteContent.ui.formStatusReady);
       return;
     }
 
-    const frameIndex = closestLoadedFrame(index);
+    const subject = encodeURIComponent(`${ctaData.mailSubjectPrefix || "IPDESIGN Enquiry"} - ${vals.name}`);
+    const body = encodeURIComponent(
+      `Name: ${vals.name}\nEmail: ${vals.email}\nWebsite: ${vals.url || "Not provided"}\n\nMessage:\n${vals.message}`
+    );
 
-    if (frameIndex === -1) {
-      return;
-    }
-
-    const image = images[frameIndex];
-
-    if (!image?.complete) {
-      return;
-    }
-
-    if (frameIndex === renderedFrame && !resized) {
-      return;
-    }
-
-    const width = canvas.width;
-    const height = canvas.height;
-    const scale = Math.min(width / image.naturalWidth, height / image.naturalHeight);
-    const drawWidth = image.naturalWidth * scale;
-    const drawHeight = image.naturalHeight * scale;
-    const dx = (width - drawWidth) / 2;
-    const dy = (height - drawHeight) / 2;
-
-    context.clearRect(0, 0, width, height);
-    context.drawImage(image, dx, dy, drawWidth, drawHeight);
-
-    const framePixels = context.getImageData(0, 0, width, height);
-    const { data } = framePixels;
-
-    for (let pixel = 0; pixel < data.length; pixel += 4) {
-      const r = data[pixel];
-      const g = data[pixel + 1];
-      const b = data[pixel + 2];
-      const max = Math.max(r, g, b);
-      const min = Math.min(r, g, b);
-      const avg = (r + g + b) / 3;
-      const chroma = max - min;
-
-      if (avg > 246 && chroma < 18) {
-        data[pixel + 3] = 0;
-        continue;
-      }
-
-      if (avg > 232 && chroma < 28) {
-        const fade = clamp((246 - avg) / 14, 0, 1);
-        data[pixel + 3] = Math.round(255 * fade);
-      }
-    }
-
-    context.putImageData(framePixels, 0, 0);
-    renderedFrame = frameIndex;
-  };
-
-  const loadFrame = (index) => {
-    if (index < 0 || index >= frameCount || images[index]) {
-      return;
-    }
-
-    const image = new Image();
-    image.decoding = "async";
-    image.src = frameUrl(index);
-    image.onload = () => {
-      loadedFrames.add(index);
-
-      if (renderedFrame === -1 || Math.abs(index - activeFrame) <= 1) {
-        drawFrame(activeFrame);
-      }
-    };
-
-    images[index] = image;
-  };
-
-  const preloadPriorityFrames = () => {
-    priorityFrames.forEach((index) => loadFrame(index));
-  };
-
-  const preloadAllFrames = () => {
-    const preload = () => {
-      for (let index = 0; index < frameCount; index += 1) {
-        loadFrame(index);
-      }
-    };
-
-    if ("requestIdleCallback" in window) {
-      window.requestIdleCallback(preload, { timeout: 1200 });
-      return;
-    }
-
-    window.setTimeout(preload, 120);
-  };
-
-  const getHeroAnchor = () => {
-    const headerRect = header.getBoundingClientRect();
-    const contentRect = heroContent.getBoundingClientRect();
-    const panelRect = heroPanel.getBoundingClientRect();
-    const sequenceWidth = sequence.offsetWidth || lastCanvasWidth || 0;
-    const sequenceHeight = sequence.offsetHeight || lastCanvasHeight || 0;
-    const rightLaneLeft = Math.max(contentRect.right + 18, window.innerWidth * 0.54);
-    const rightLaneRight = window.innerWidth - 28;
-    const topLaneTop = headerRect.bottom + 28;
-    const topLaneBottom = Math.max(topLaneTop, panelRect.top - sequenceHeight * 0.58);
-
-    return {
-      x: clamp(((rightLaneLeft + rightLaneRight) - sequenceWidth) / 2, 24, window.innerWidth - sequenceWidth - 24),
-      y: clamp((topLaneTop + topLaneBottom) / 2 + 24, topLaneTop, window.innerHeight - sequenceHeight - 24),
-    };
-  };
-
-  const getEditorialAnchor = () => {
-    const headerRect = header.getBoundingClientRect();
-    const titleRect = editorialTitle.getBoundingClientRect();
-    const supportRect = editorialSupport.getBoundingClientRect();
-    const sequenceWidth = sequence.offsetWidth || lastCanvasWidth || 0;
-    const sequenceHeight = sequence.offsetHeight || lastCanvasHeight || 0;
-    const laneLeft = Math.max(32, supportRect.right + 14);
-    const laneRight = Math.max(laneLeft, titleRect.left - 24);
-    const laneTop = Math.max(headerRect.bottom + 26, supportRect.top - sequenceHeight * 0.15);
-    const laneBottom = Math.max(laneTop, supportRect.bottom + 34);
-
-    return {
-      x: clamp(((laneLeft + laneRight) - sequenceWidth) / 2, 24, window.innerWidth - sequenceWidth - 24),
-      y: clamp((laneTop + laneBottom - sequenceHeight) / 2 + 34, headerRect.bottom + 24, window.innerHeight - sequenceHeight - 24),
-    };
-  };
-
-  const getGapAnchor = () => {
-    const servicesHeadingRect = servicesHeading.getBoundingClientRect();
-    const servicesGridRect = servicesGrid?.getBoundingClientRect();
-    const whyRect = why.getBoundingClientRect();
-    const sequenceWidth = sequence.offsetWidth || lastCanvasWidth || 0;
-    const sequenceHeight = sequence.offsetHeight || lastCanvasHeight || 0;
-    const laneLeft = Math.max(servicesHeadingRect.right + 26, window.innerWidth * 0.46);
-    const laneRight = window.innerWidth - 30;
-    const topSource = servicesGridRect ? servicesGridRect.bottom + 14 : whyRect.top - sequenceHeight - 20;
-    const bottomSource = whyRect.top - 18;
-
-    return {
-      x: clamp(((laneLeft + laneRight) - sequenceWidth) / 2 - 8, 24, window.innerWidth - sequenceWidth - 24),
-      y: clamp((topSource + bottomSource - sequenceHeight) / 2, 24, window.innerHeight - sequenceHeight - 24),
-    };
-  };
-
-  const updateSequence = () => {
-    const heroRect = hero.getBoundingClientRect();
-    const whyRect = why.getBoundingClientRect();
-    const viewportHeight = window.innerHeight || 1;
-    const heroTop = window.scrollY + heroRect.top;
-    const editorialTop = window.scrollY + editorial.getBoundingClientRect().top;
-    const whyTop = window.scrollY + whyRect.top;
-    const start = heroTop;
-    const editorialEnd = Math.max(start + 1, editorialTop + viewportHeight * 0.16);
-    const whyEnd = Math.max(editorialEnd + 1, whyTop + viewportHeight * 0.08);
-    const frameProgress = clamp((window.scrollY - start) / (whyEnd - start), 0, 1);
-    const fadeStart = whyTop + viewportHeight * 0.22;
-    const fadeEnd = whyTop + viewportHeight * 0.92;
-    const fadeProgress = clamp((window.scrollY - fadeStart) / (fadeEnd - fadeStart), 0, 1);
-    const heroAnchor = getHeroAnchor();
-    const editorialAnchor = getEditorialAnchor();
-    const gapAnchor = getGapAnchor();
-    const pathSplit = 0.62;
-    let sequenceX = heroAnchor.x;
-    let sequenceY = heroAnchor.y;
-    let sequenceScale = 1.2;
-
-    if (frameProgress <= pathSplit) {
-      const segmentProgress = clamp(frameProgress / pathSplit, 0, 1);
-      sequenceX = lerp(heroAnchor.x, editorialAnchor.x, segmentProgress);
-      sequenceY = lerp(heroAnchor.y, editorialAnchor.y, segmentProgress);
-      sequenceScale = lerp(1.2, 1.12, segmentProgress);
-    } else {
-      const segmentProgress = clamp((frameProgress - pathSplit) / (1 - pathSplit), 0, 1);
-      sequenceX = lerp(editorialAnchor.x, gapAnchor.x, segmentProgress);
-      sequenceY = lerp(editorialAnchor.y, gapAnchor.y, segmentProgress);
-      sequenceScale = lerp(1.12, 1.04, segmentProgress);
-    }
-
-    activeFrame = Math.round(frameProgress * (frameCount - 1));
-    drawFrame(activeFrame);
-
-    for (let offset = -2; offset <= 2; offset += 1) {
-      loadFrame(activeFrame + offset);
-    }
-
-    sequence.style.setProperty("--sequence-x", `${sequenceX.toFixed(2)}px`);
-    sequence.style.setProperty("--sequence-y", `${sequenceY.toFixed(2)}px`);
-    sequence.style.setProperty("--sequence-opacity", `${(1 - fadeProgress).toFixed(3)}`);
-    sequence.style.setProperty("--sequence-scale", `${sequenceScale.toFixed(4)}`);
-  };
-
-  const queueUpdate = () => {
-    if (rafId) {
-      return;
-    }
-
-    rafId = requestAnimationFrame(() => {
-      rafId = 0;
-      updateSequence();
-    });
-  };
-
-  preloadPriorityFrames();
-  preloadAllFrames();
-
-  if (reduceMotion.matches) {
-    loadFrame(0);
-    const heroAnchor = getHeroAnchor();
-    sequence.style.setProperty("--sequence-x", `${heroAnchor.x.toFixed(2)}px`);
-    sequence.style.setProperty("--sequence-y", `${heroAnchor.y.toFixed(2)}px`);
-    sequence.style.setProperty("--sequence-opacity", "0.92");
-    drawFrame(0);
-    window.addEventListener("resize", () => {
-      const nextHeroAnchor = getHeroAnchor();
-      sequence.style.setProperty("--sequence-x", `${nextHeroAnchor.x.toFixed(2)}px`);
-      sequence.style.setProperty("--sequence-y", `${nextHeroAnchor.y.toFixed(2)}px`);
-      drawFrame(0);
-    });
-    return;
-  }
-
-  window.addEventListener("scroll", queueUpdate, { passive: true });
-  window.addEventListener("resize", queueUpdate);
-  window.addEventListener("load", queueUpdate, { once: true });
-  queueUpdate();
+    window.location.href = `mailto:${dest}?subject=${subject}&body=${body}`;
+  });
 }
 
 // ── Language switching ──────────────────────────────────────────────
@@ -1832,28 +1512,48 @@ function setLanguage(lang) {
 
   document.documentElement.lang = lang === "en" ? "en-GB" : "fr";
 
-  renderStaticContent();
-  renderServices();
-  renderIndustries();
-  renderProcess();
-  renderVentures();
-  renderPortalRows();
-  renderPortalDetail(0);
+  // Kill all ScrollTriggers before re-rendering
+  ScrollTrigger.getAll().forEach(st => st.kill());
 
-  // Re-observe new dynamic elements for reveal animation
+  renderStaticContent();
+  renderPillars();
+  renderServices();
+  renderProjects();
+  renderFAQ();
+  renderComparison();
+  renderProcess();
+
   requestAnimationFrame(() => {
-    setupReveals();
-    setupInteractiveCards();
+    initGSAP();
+    window.scrollTo(0, 0);
   });
 }
 
 function bindLanguageToggle() {
   const toggle = document.querySelector("#lang-toggle");
   if (!toggle) return;
-
   toggle.addEventListener("click", () => {
     setLanguage(currentLang === "en" ? "fr" : "en");
   });
+}
+
+// ── GSAP Initialization ─────────────────────────────────────────────
+function initGSAP() {
+  if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
+
+  gsap.registerPlugin(ScrollTrigger);
+  if (typeof SplitText !== "undefined") gsap.registerPlugin(SplitText);
+  if (typeof Observer !== "undefined") gsap.registerPlugin(Observer);
+  setupHeroAnimation();
+  setupGallery();
+  setupProjects();
+  setupServicesMorph();
+  setupKineticType();
+  setupStatsCounter();
+  setupMarquee();
+  setupScrollReveals();
+  setupHeaderScroll();
+  setupScrollProgress();
 }
 
 // ── Initialise ──────────────────────────────────────────────────────
@@ -1861,22 +1561,18 @@ function initializePage() {
   document.documentElement.lang = currentLang === "en" ? "en-GB" : "fr";
 
   renderStaticContent();
+  renderPillars();
   renderServices();
-  renderIndustries();
+  renderProjects();
+  renderFAQ();
+  renderComparison();
   renderProcess();
-  renderVentures();
-  renderPortalRows();
-  renderPortalDetail(0);
-  bindPortalRows();
-  bindBriefForm();
+  bindAuditForm();
   bindLanguageToggle();
 
-  setupHeaderScroll();
-
+  // Wait for GSAP to be available, then initialize
   requestAnimationFrame(() => {
-    setupReveals();
-    setupInteractiveCards();
-    setupHeroSequence();
+    initGSAP();
   });
 }
 
