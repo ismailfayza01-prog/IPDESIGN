@@ -1044,7 +1044,6 @@ function renderStaticContent() {
 
   // Language toggle
   setText("#lang-toggle", siteContent.ui.langToggleLabel);
-  setText("#projects-label", currentLang === "en" ? "Latest Projects" : "Projets récents");
 }
 
 // ── Render pillars (differentiation cards) ──────────────────────────
@@ -1083,38 +1082,50 @@ function renderServices() {
   `;
 }
 
-// ── Render projects (portfolio showcase panels) ─────────────────────
-function renderProjects() {
-  const imagesContainer = document.querySelector("#project-images");
-  const metaContainer = document.querySelector("#project-meta-list");
-  if (!imagesContainer || !metaContainer) return;
+// ── Portfolio project data ──────────────────────────────────────────
+const portfolioData = {
+  en: [
+    { brand: "Faga", sector: "Sports & Fitness", desc: "Digital presence for sports operators and coaching brands", image: "https://images.unsplash.com/photo-1517832207067-4db24a2ae47c?auto=format&fit=crop&w=800&q=80", demo: "demos/sport.html" },
+    { brand: "Drive Beyond", sector: "Premium Car Rental", desc: "Premium fleet showcase with booking intent capture", image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80", demo: "demos/car-rental.html" },
+    { brand: "Bouknou", sector: "Law Firm", desc: "Authority and credibility for legal consultancy", image: "https://images.unsplash.com/photo-1555371363-72f1af3b1bc3?auto=format&fit=crop&w=800&q=80", demo: "demos/law-firm.html" },
+    { brand: "Dr Dardar", sector: "Dental Clinic", desc: "Trust-first design for patient acquisition", image: "https://images.unsplash.com/photo-1580281657521-5e5a31c5da2b?auto=format&fit=crop&w=800&q=80", demo: "demos/dental.html" },
+    { brand: "The1000 Courier", sector: "B2B Delivery", desc: "Operational credibility for B2B courier services", image: "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=800&q=80", demo: "demos/b2b-courier.html" },
+    { brand: "ShipTrack", sector: "Logistics & Transport", desc: "Structure and visibility for transport operators", image: "https://images.unsplash.com/photo-1456030948022-9d8a3a5dfa44?auto=format&fit=crop&w=800&q=80", demo: "demos/logistics.html" },
+    { brand: "MyResiDex", sector: "Real Estate", desc: "Premium property showcase with lead qualification", image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=800&q=80", demo: "demos/real-estate.html" },
+  ],
+  fr: [
+    { brand: "Faga", sector: "Sport & Fitness", desc: "Présence digitale pour opérateurs sportifs et marques de coaching", image: "https://images.unsplash.com/photo-1517832207067-4db24a2ae47c?auto=format&fit=crop&w=800&q=80", demo: "demos/sport.html" },
+    { brand: "Drive Beyond", sector: "Location Premium", desc: "Vitrine flotte premium avec capture d'intention de réservation", image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80", demo: "demos/car-rental.html" },
+    { brand: "Bouknou", sector: "Cabinet Juridique", desc: "Autorité et crédibilité pour conseil juridique", image: "https://images.unsplash.com/photo-1555371363-72f1af3b1bc3?auto=format&fit=crop&w=800&q=80", demo: "demos/law-firm.html" },
+    { brand: "Dr Dardar", sector: "Clinique Dentaire", desc: "Design orienté confiance pour acquisition de patients", image: "https://images.unsplash.com/photo-1580281657521-5e5a31c5da2b?auto=format&fit=crop&w=800&q=80", demo: "demos/dental.html" },
+    { brand: "The1000 Courier", sector: "Livraison B2B", desc: "Crédibilité opérationnelle pour services de coursier B2B", image: "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=800&q=80", demo: "demos/b2b-courier.html" },
+    { brand: "ShipTrack", sector: "Logistique & Transport", desc: "Structure et visibilité pour opérateurs transport", image: "https://images.unsplash.com/photo-1456030948022-9d8a3a5dfa44?auto=format&fit=crop&w=800&q=80", demo: "demos/logistics.html" },
+    { brand: "MyResiDex", sector: "Immobilier", desc: "Vitrine immobilière premium avec qualification de leads", image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=800&q=80", demo: "demos/real-estate.html" },
+  ],
+};
 
-  const items = venturesData[currentLang].slice(0, 3);
+// ── Render portfolio (bento grid) ──────────────────────────────────
+function renderPortfolio() {
+  const grid = document.querySelector("#portfolio-grid");
+  if (!grid) return;
 
-  // Project images (use colored placeholders)
-  const colors = ["#1a1a2e", "#16213e", "#0f3460"];
-  imagesContainer.innerHTML = items.map((item, i) => `
-    <div class="project-section" style="opacity:${i === 0 ? 1 : 0}">
-      <div class="project-placeholder" style="
-        width:85%;max-height:70vh;aspect-ratio:16/10;
-        border-radius:var(--radius-lg);
-        background:${colors[i]};
-        display:flex;align-items:center;justify-content:center;
-        font-family:'DM Sans',sans-serif;font-size:1.4rem;font-weight:700;
-        color:var(--accent-light);opacity:0.6;
-      ">${item.name}</div>
-    </div>
+  const items = portfolioData[currentLang];
+  grid.innerHTML = items.map(p => `
+    <a class="card" href="${p.demo}" target="_blank" rel="noopener">
+      <div class="card__image">
+        <img src="${p.image}" alt="${p.brand} — ${p.sector}" loading="lazy" />
+      </div>
+      <div class="card__content">
+        <h3 class="card__brand">${p.brand}</h3>
+        <div class="card__meta"><span class="sector-pill">${p.sector}</span></div>
+        <p class="card__desc">${p.desc}</p>
+      </div>
+    </a>
   `).join("");
 
-  // Project metadata
-  metaContainer.innerHTML = items.map((item, i) => `
-    <div class="project-meta" style="opacity:${i === 0 ? 1 : 0};${i !== 0 ? "pointer-events:none;" : ""}position:${i === 0 ? "relative" : "absolute"};top:0;left:0;">
-      <span class="project-meta__country">${item.stage}</span>
-      <h3 class="project-meta__title">${item.name}</h3>
-      <p class="project-meta__desc">${item.description.substring(0, 120)}...</p>
-      <a class="project-meta__link" href="#contact">${currentLang === "en" ? "View project" : "Voir le projet"}</a>
-    </div>
-  `).join("");
+  // Portfolio heading text
+  setText("#portfolio-eyebrow", currentLang === "en" ? "Portfolio" : "Portfolio");
+  setText("#portfolio-title", currentLang === "en" ? "Projects that prove the point." : "Des projets qui parlent d'eux-mêmes.");
 }
 
 // ── Render FAQ (accordion) ──────────────────────────────────────────
@@ -1224,61 +1235,6 @@ function setupHeroAnimation() {
 }
 
 // ── GSAP: Pinned Gallery ────────────────────────────────────────────
-function setupGallery() {
-  const gallery = document.querySelector(".gallery");
-  const images = gallery?.querySelectorAll(".gallery__img");
-  if (!gallery || !images?.length || isMobile.matches) return;
-  // Skip if images have no src (empty placeholders would create invisible pinned dead zones)
-  const hasRealImages = Array.from(images).some(img => img.src && !img.src.endsWith("/"));
-  if (!hasRealImages) { gallery.style.display = "none"; return; }
-
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: gallery,
-      start: "top top",
-      end: () => "+=" + images.length * window.innerHeight,
-      pin: true,
-      scrub: true,
-    },
-  });
-
-  images.forEach((img, i) => {
-    if (i === 0) return;
-    tl.fromTo(img, { opacity: 0, scale: 1.08 }, { opacity: 1, scale: 1, duration: 1 }, i * 0.7);
-  });
-}
-
-// ── GSAP: Projects Showcase ─────────────────────────────────────────
-function setupProjects() {
-  const section = document.querySelector(".projects");
-  const projectSections = section?.querySelectorAll(".project-section");
-  const counter = section?.querySelector(".animated-number");
-  const metas = section?.querySelectorAll(".project-meta");
-  if (!section || !projectSections?.length || projectSections.length < 2 || isMobile.matches) return;
-
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: section,
-      start: "top top",
-      end: () => "+=" + projectSections.length * window.innerHeight * 1.5,
-      pin: true,
-      scrub: 1,
-    },
-  });
-
-  for (let i = 1; i < projectSections.length; i++) {
-    tl.to(projectSections[i - 1], { opacity: 0, duration: 0.5 }, i);
-    tl.to(projectSections[i], { opacity: 1, duration: 0.5 }, i);
-
-    if (counter) {
-      tl.to(counter, { textContent: String(i + 1).padStart(2, "0"), duration: 0.01, snap: { textContent: 1 } }, i);
-    }
-
-    if (metas[i - 1]) tl.to(metas[i - 1], { opacity: 0, y: -20, duration: 0.3, position: "absolute" }, i);
-    if (metas[i]) tl.to(metas[i], { opacity: 1, y: 0, duration: 0.3 }, i + 0.2);
-  }
-}
-
 // ── GSAP: Services Horizontal Scroll ────────────────────────────────
 function setupServicesMorph() {
   const section = document.querySelector(".services-morph");
@@ -1518,7 +1474,7 @@ function setLanguage(lang) {
   renderStaticContent();
   renderPillars();
   renderServices();
-  renderProjects();
+  renderPortfolio();
   renderFAQ();
   renderComparison();
   renderProcess();
@@ -1545,8 +1501,6 @@ function initGSAP() {
   if (typeof SplitText !== "undefined") gsap.registerPlugin(SplitText);
   if (typeof Observer !== "undefined") gsap.registerPlugin(Observer);
   setupHeroAnimation();
-  setupGallery();
-  setupProjects();
   setupServicesMorph();
   setupKineticType();
   setupStatsCounter();
@@ -1563,7 +1517,7 @@ function initializePage() {
   renderStaticContent();
   renderPillars();
   renderServices();
-  renderProjects();
+  renderPortfolio();
   renderFAQ();
   renderComparison();
   renderProcess();
