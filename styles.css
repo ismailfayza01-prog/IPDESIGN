@@ -112,7 +112,7 @@ html {
   left: 0;
   width: 100%;
   z-index: 100;
-  padding: 1.25rem 0;
+  padding: 0.75rem 0;
   background: rgba(10, 10, 15, 0.8);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -121,7 +121,7 @@ html {
 }
 
 .site-header.is-scrolled {
-  padding: 0.75rem 0;
+  padding: 0.5rem 0;
   background: rgba(10, 10, 15, 0.95);
 }
 
@@ -133,7 +133,7 @@ html {
 }
 
 .brand__logo {
-  height: clamp(3rem, 5vw, 4rem);
+  height: clamp(2.25rem, 4vw, 3rem);
   width: auto;
 }
 
